@@ -2,7 +2,12 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CRM Pro">
+<meta name="theme-color" content="#0f1117">
 <title>CRM Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
@@ -333,9 +338,132 @@ textarea.form-input{resize:vertical;min-height:72px;}
 .card-name-link:hover{color:var(--accent);text-decoration:underline;}
 .card-address{font-size:11px;color:var(--text3);margin-top:1px;}
 .card-note-visible{font-size:11.5px;color:var(--text2);font-style:italic;margin-top:4px;padding:5px 8px;background:rgba(79,124,255,.07);border-radius:4px;border-left:2px solid var(--accent);}
+
+/* ══════════════════════════════════════════════
+   MOBILE & PWA RESPONSIVE STYLES
+   ══════════════════════════════════════════════ */
+
+/* Bottom nav bar for mobile */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:200;padding:6px 0 calc(6px + env(safe-area-inset-bottom));justify-content:space-around;align-items:center;}
+.mobile-nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 12px;cursor:pointer;color:var(--text3);font-size:10px;font-weight:500;border-radius:10px;min-width:52px;transition:all .15s;}
+.mobile-nav-item .mnav-icon{font-size:20px;line-height:1;}
+.mobile-nav-item.active{color:var(--accent);}
+.mobile-nav-item:active{background:rgba(79,124,255,.1);}
+
+/* Mobile topbar */
+.mobile-topbar{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--surface);border-bottom:1px solid var(--border);padding:calc(12px + env(safe-area-inset-top)) 16px 12px;align-items:center;justify-content:space-between;}
+.mobile-topbar-title{font-size:17px;font-weight:700;color:var(--text);}
+.mobile-menu-btn{background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer;padding:4px 8px;}
+
+/* Mobile more menu overlay */
+.mobile-more-menu{display:none;position:fixed;bottom:calc(70px + env(safe-area-inset-bottom));left:12px;right:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);z-index:300;padding:8px;box-shadow:0 -4px 32px rgba(0,0,0,.5);}
+.mobile-more-menu.open{display:block;}
+.mobile-more-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--radius-sm);cursor:pointer;color:var(--text2);font-size:14px;font-weight:500;}
+.mobile-more-item:active,.mobile-more-item:hover{background:rgba(79,124,255,.1);color:var(--accent);}
+.mobile-more-overlay{display:none;position:fixed;inset:0;z-index:250;}
+.mobile-more-overlay.open{display:block;}
+
+@media (max-width: 768px) {
+  /* Hide desktop sidebar and topbar */
+  .sidebar{display:none!important;}
+  .topbar{display:none!important;}
+  .sidebar-toggle{display:none!important;}
+
+  /* Show mobile elements */
+  .mobile-nav{display:flex;}
+  .mobile-topbar{display:flex;}
+
+  /* Content adjustments */
+  .app{padding-top:calc(54px + env(safe-area-inset-top))!important;}
+  .main{padding-bottom:calc(70px + env(safe-area-inset-bottom));}
+  .content{padding:16px 14px;}
+
+  /* Auth screen */
+  .auth-card{width:100%;max-width:100%;border-radius:0;border-left:none;border-right:none;min-height:100vh;border-top:none;}
+  .auth-body{padding:20px 22px 28px;}
+  .auth-header{padding:28px 22px 0;}
+
+  /* Kanban — horizontal scroll */
+  .kanban-board{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
+  .kanban-col{min-width:280px;max-width:280px;flex-shrink:0;scroll-snap-align:start;}
+
+  /* Contact list */
+  .contact-row{grid-template-columns:1fr auto!important;gap:4px;}
+  .contact-row .contact-email,.contact-row .contact-phone,.contact-row .contact-agent,.contact-row .contact-resp{display:none;}
+
+  /* Tables → cards on mobile */
+  .clienti-row{grid-template-columns:1fr auto!important;}
+  .clienti-row > div:not(:first-child):not(:last-child){display:none;}
+
+  /* Stats grid */
+  .stats-grid{grid-template-columns:1fr 1fr!important;}
+
+  /* Modals — full screen on mobile */
+  .modal{width:100%!important;max-width:100%!important;margin:0!important;border-radius:16px 16px 0 0!important;max-height:92vh!important;position:fixed!important;bottom:0!important;left:0!important;right:0!important;}
+  .modal-overlay{align-items:flex-end!important;}
+
+  /* Forms */
+  .form-grid{grid-template-columns:1fr!important;}
+
+  /* KPI cards */
+  .calcoli-kpi-grid,.stats-kpi-row{grid-template-columns:1fr 1fr!important;}
+
+  /* Pannello user rows */
+  .pan-user-row{grid-template-columns:1fr auto!important;}
+  .pan-user-row > div:nth-child(3),.pan-user-row > div:nth-child(4){display:none;}
+
+  /* Team cards */
+  .team-grid{grid-template-columns:1fr!important;}
+
+  /* Topbar action buttons */  
+  .topbar-actions{flex-wrap:wrap;gap:4px;}
+}
+
+@media (max-width: 400px) {
+  .mobile-nav-item{padding:6px 8px;min-width:44px;font-size:9px;}
+  .content{padding:12px 10px;}
+}
 </style>
 </head>
 <body>
+
+<!-- MOBILE TOPBAR -->
+<div class="mobile-topbar" id="mobile-topbar">
+  <div class="mobile-topbar-title" id="mobile-page-title">CRM Pro</div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div style="font-size:11px;color:var(--text3);" id="mobile-sync-label">—</div>
+    <div id="mobile-user-avatar" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;cursor:pointer;" onclick="showSection('profilo')">?</div>
+  </div>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav-item active" id="mnav-contacts" onclick="showSection('contacts');closeMobileMore()">
+    <span class="mnav-icon">👥</span><span>Contatti</span>
+  </div>
+  <div class="mobile-nav-item" id="mnav-work" onclick="showSection('work');closeMobileMore()">
+    <span class="mnav-icon">⚡</span><span>Lavoro</span>
+  </div>
+  <div class="mobile-nav-item" id="mnav-clienti" onclick="showSection('clienti');closeMobileMore()">
+    <span class="mnav-icon">🏆</span><span>Clienti</span>
+  </div>
+  <div class="mobile-nav-item" id="mnav-calcoli" onclick="showSection('calcoli');closeMobileMore()">
+    <span class="mnav-icon">🧮</span><span>Calcoli</span>
+  </div>
+  <div class="mobile-nav-item" id="mnav-more" onclick="toggleMobileMore()">
+    <span class="mnav-icon">☰</span><span>Altro</span>
+  </div>
+</div>
+
+<!-- MOBILE MORE MENU -->
+<div class="mobile-more-overlay" id="mobile-more-overlay" onclick="closeMobileMore()"></div>
+<div class="mobile-more-menu" id="mobile-more-menu">
+  <div class="mobile-more-item" onclick="showSection('stats');closeMobileMore()">📊 <span>Statistiche</span></div>
+  <div class="mobile-more-item" id="mnav-team-more" onclick="showSection('team');closeMobileMore()">👤 <span>Team</span></div>
+  <div class="mobile-more-item" id="mnav-pannello-more" onclick="showSection('pannello');closeMobileMore()" style="display:none;">⚙️ <span>Pannello di Controllo</span></div>
+  <div class="mobile-more-item" onclick="showSection('profilo');closeMobileMore()">👤 <span>Il mio Profilo</span></div>
+  <div class="mobile-more-item" onclick="doLogout();closeMobileMore()" style="color:var(--red);">⏻ <span>Esci</span></div>
+</div>
 
 <!-- ═══════════════════════════════════════════ AUTH ═══ -->
 <div class="auth-screen" id="auth-screen">
@@ -1429,6 +1557,8 @@ function loginUser(u) {
   localStorage.setItem('crm_session', u.id);
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app').classList.add('visible');
+  showMobileUI(true);
+  updateMobileNav('contacts');
   // ui
   const initials = (u.nome[0]||'') + (u.cognome[0]||'');
   document.getElementById('user-avatar').textContent       = initials.toUpperCase();
@@ -1450,6 +1580,7 @@ function doLogout() {
   localStorage.removeItem('crm_session');
   document.getElementById('app').classList.remove('visible');
   document.getElementById('auth-screen').style.display = '';
+  showMobileUI(false);
   document.getElementById('login-email').value = '';
   document.getElementById('login-pw').value = '';
   document.getElementById('login-error').classList.remove('show');
@@ -1529,6 +1660,7 @@ function showSection(name) {
   if(name==='calcoli')  { populateCalcoliFilters(); renderCalcoli(); }
   if(name==='profilo')  { renderProfilo(); }
   if(name==='pannello') { renderPannello(); }
+  updateMobileNav(name);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -3376,6 +3508,95 @@ function restoreSidebarState(){
   }
 }
 
+
+// ═══════════════════════════════════════════════════════════
+// MOBILE NAV
+// ═══════════════════════════════════════════════════════════
+function isMobile(){ return window.innerWidth <= 768; }
+
+function updateMobileNav(name){
+  if(!isMobile()) return;
+  // Update mobile topbar title
+  const titles={contacts:'Contatti',work:'Lavoro in Corso',stats:'Statistiche',
+    team:'Team',clienti:'Clienti',calcoli:'Calcoli',profilo:'Profilo',pannello:'Pannello'};
+  const titleEl=document.getElementById('mobile-page-title');
+  if(titleEl) titleEl.textContent=titles[name]||'CRM Pro';
+
+  // Update bottom nav active state
+  const map={contacts:'mnav-contacts',work:'mnav-work',clienti:'mnav-clienti',calcoli:'mnav-calcoli'};
+  document.querySelectorAll('.mobile-nav-item').forEach(el=>el.classList.remove('active'));
+  const activeId=map[name];
+  if(activeId){ const el=document.getElementById(activeId); if(el) el.classList.add('active'); }
+  else{ const moreEl=document.getElementById('mnav-more'); if(moreEl) moreEl.classList.add('active'); }
+
+  // Show/hide team and pannello in more menu based on role
+  const teamMore=document.getElementById('mnav-team-more');
+  const pannelloMore=document.getElementById('mnav-pannello-more');
+  if(currentUser){
+    const isPriv=currentUser.ruolo==='Amministratore'||currentUser.ruolo==='Responsabile';
+    if(teamMore) teamMore.style.display=isPriv?'':'none';
+    if(pannelloMore) pannelloMore.style.display=currentUser.ruolo==='Amministratore'?'':'none';
+  }
+
+  // Sync mobile avatar
+  const mAvatar=document.getElementById('mobile-user-avatar');
+  if(mAvatar&&currentUser){
+    if(currentUser.photo){
+      mAvatar.innerHTML=`<img src="${currentUser.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    } else {
+      mAvatar.textContent=((currentUser.nome[0]||'')+(currentUser.cognome[0]||'')).toUpperCase();
+    }
+  }
+
+  // Sync mobile sync label
+  const mSync=document.getElementById('mobile-sync-label');
+  const desktopSync=document.getElementById('sync-label');
+  if(mSync&&desktopSync) mSync.textContent=desktopSync.textContent;
+}
+
+function toggleMobileMore(){
+  const menu=document.getElementById('mobile-more-menu');
+  const overlay=document.getElementById('mobile-more-overlay');
+  const btn=document.getElementById('mnav-more');
+  const isOpen=menu.classList.contains('open');
+  menu.classList.toggle('open',!isOpen);
+  overlay.classList.toggle('open',!isOpen);
+  if(btn) btn.classList.toggle('active',!isOpen);
+}
+
+function closeMobileMore(){
+  document.getElementById('mobile-more-menu')?.classList.remove('open');
+  document.getElementById('mobile-more-overlay')?.classList.remove('open');
+}
+
+function showMobileUI(show){
+  document.getElementById('mobile-topbar').style.display = show ? (isMobile()?'flex':'none') : 'none';
+  document.getElementById('mobile-nav').style.display = show ? (isMobile()?'flex':'none') : 'none';
+}
+
+// PWA Service Worker registration
+function registerSW(){
+  if('serviceWorker' in navigator){
+    // Inline service worker as blob to avoid needing a separate file
+    const swCode=`
+const CACHE='crm-pro-v1';
+const ASSETS=[self.location.href.replace('sw.js','')];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));});
+self.addEventListener('fetch',e=>{
+  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{
+    const clone=res.clone();
+    caches.open(CACHE).then(c=>c.put(e.request,clone));
+    return res;
+  }).catch(()=>caches.match(e.request))));
+});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));});
+    `;
+    const blob=new Blob([swCode],{type:'application/javascript'});
+    const swUrl=URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swUrl).catch(e=>console.log('SW:',e));
+  }
+}
+
 // ═══════════════════════════════════════════════════════════
 // MODALS
 // ═══════════════════════════════════════════════════════════
@@ -3439,6 +3660,7 @@ checkReminders();
 restoreSidebarState();
 // Auto-connect Firebase (config pre-caricata)
 setSyncStatus('saving','Connessione Firebase…');
+registerSW();
 initFirebase(FB_CONFIG).then(ok=>{
   if(ok){
     cloudPull().then(pulled=>{
