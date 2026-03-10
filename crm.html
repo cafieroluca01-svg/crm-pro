@@ -423,6 +423,38 @@ textarea.form-input{resize:vertical;min-height:72px;}
   .mobile-nav-item{padding:6px 8px;min-width:44px;font-size:9px;}
   .content{padding:12px 10px;}
 }
+/* ── FARMING ─────────────────────────────────── */
+.farming-step-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;}
+.farming-step-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.farming-step-num{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.farming-source-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;}
+.farming-source-card{background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius);padding:16px 12px;text-align:center;cursor:pointer;transition:all .15s;}
+.farming-source-card:hover{border-color:var(--accent);background:rgba(79,124,255,.08);}
+.farming-source-card.active{border-color:var(--accent);background:rgba(79,124,255,.12);}
+.farming-source-icon{font-size:26px;margin-bottom:6px;}
+.farming-source-name{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.farming-source-sub{font-size:10.5px;color:var(--text3);}
+.farming-info-box{background:rgba(79,124,255,.08);border:1px solid rgba(79,124,255,.25);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:16px;font-size:12.5px;color:var(--text2);line-height:1.6;}
+.farming-info-box b{color:var(--accent);}
+.farming-instructions{background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border);padding:16px 18px;margin-bottom:14px;}
+.farming-instr-step{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;}
+.farming-instr-step:last-child{margin-bottom:0;}
+.farming-instr-num{width:22px;height:22px;border-radius:50%;background:var(--accent2);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.farming-instr-text{font-size:12.5px;color:var(--text2);line-height:1.5;}
+.farming-instr-text b{color:var(--text);}
+.farming-open-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:all .15s;}
+.farming-col-map-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:4px;}
+.farming-col-map-item{background:var(--surface2);border-radius:var(--radius-sm);padding:8px 12px;}
+.farming-col-map-label{font-size:10.5px;color:var(--text3);margin-bottom:4px;}
+.farming-col-map-select{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:4px;font-size:11.5px;font-family:inherit;}
+.farming-preview-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.farming-preview-tbl th{background:var(--surface2);padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap;}
+.farming-preview-tbl td{padding:7px 12px;border-bottom:1px solid var(--border);color:var(--text2);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.farming-preview-tbl tr:last-child td{border-bottom:none;}
+.farming-preview-tbl tr:hover td{background:rgba(79,124,255,.04);}
+.farming-hist-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:6px;font-size:12.5px;}
+.farming-hist-row:last-child{margin-bottom:0;}
+.farming-hist-badge{display:inline-flex;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:600;background:rgba(39,201,143,.15);color:var(--green);}
 </style>
 </head>
 <body>
@@ -461,6 +493,7 @@ textarea.form-input{resize:vertical;min-height:72px;}
   <div class="mobile-more-item" onclick="showSection('stats');closeMobileMore()">📊 <span>Statistiche</span></div>
   <div class="mobile-more-item" id="mnav-team-more" onclick="showSection('team');closeMobileMore()">👤 <span>Team</span></div>
   <div class="mobile-more-item" id="mnav-pannello-more" onclick="showSection('pannello');closeMobileMore()" style="display:none;">⚙️ <span>Pannello di Controllo</span></div>
+  <div class="mobile-more-item" onclick="showSection('farming');closeMobileMore()">🌱 <span>Farming</span></div>
   <div class="mobile-more-item" onclick="showSection('profilo');closeMobileMore()">👤 <span>Il mio Profilo</span></div>
   <div class="mobile-more-item" onclick="doLogout();closeMobileMore()" style="color:var(--red);">⏻ <span>Esci</span></div>
 </div>
@@ -519,6 +552,7 @@ textarea.form-input{resize:vertical;min-height:72px;}
     <div class="nav-item" id="nav-team" onclick="showSection('team')" style="display:none;"><span class="nav-icon">👤</span><span class="nav-label">Team</span></div>
     <div class="nav-item" id="nav-clienti" onclick="showSection('clienti')"><span class="nav-icon">🏆</span><span class="nav-label">Clienti</span></div>
     <div class="nav-item" onclick="showSection('calcoli')"><span class="nav-icon">🧮</span><span class="nav-label">Calcoli</span></div>
+    <div class="nav-item" onclick="showSection('farming')"><span class="nav-icon">🌱</span><span class="nav-label">Farming</span></div>
     <div class="nav-item" id="nav-pannello" onclick="showSection('pannello')" style="display:none;"><span class="nav-icon">⚙️</span><span class="nav-label">Pannello di Controllo</span></div>
     <div class="sidebar-footer">
       <div id="sync-indicator" class="sync-indicator"><span class="sync-dot ok" id="sync-dot"></span><span id="sync-label" style="color:var(--text3);font-size:11px;">Connesso</span></div>
@@ -852,6 +886,130 @@ textarea.form-input{resize:vertical;min-height:72px;}
       </div>
 
       <!-- PANNELLO DI CONTROLLO (admin only) -->
+
+      <!-- FARMING -->
+      <div class="section" id="section-farming">
+        <!-- STEP 1: Sorgente -->
+        <div class="farming-step-card" id="farming-step1">
+          <div class="farming-step-header">
+            <span class="farming-step-num">1</span>
+            <div>
+              <div style="font-size:15px;font-weight:700;">Scegli la sorgente dei lead</div>
+              <div style="font-size:12.5px;color:var(--text2);margin-top:2px;">Seleziona da dove vuoi importare i nuovi contatti</div>
+            </div>
+          </div>
+          <div class="farming-source-grid" id="farming-sources">
+            <div class="farming-source-card active" onclick="selectFarmingSource('paginegialle')" id="fsrc-paginegialle">
+              <div class="farming-source-icon">🟡</div>
+              <div class="farming-source-name">Pagine Gialle</div>
+              <div class="farming-source-sub">paginegialle.it</div>
+            </div>
+            <div class="farming-source-card" onclick="selectFarmingSource('googlemaps')" id="fsrc-googlemaps">
+              <div class="farming-source-icon">🗺</div>
+              <div class="farming-source-name">Google Maps</div>
+              <div class="farming-source-sub">maps.google.com</div>
+            </div>
+            <div class="farming-source-card" onclick="selectFarmingSource('linkedin')" id="fsrc-linkedin">
+              <div class="farming-source-icon">💼</div>
+              <div class="farming-source-name">LinkedIn</div>
+              <div class="farming-source-sub">linkedin.com</div>
+            </div>
+            <div class="farming-source-card" onclick="selectFarmingSource('ebay')" id="fsrc-ebay">
+              <div class="farming-source-icon">🛒</div>
+              <div class="farming-source-name">eBay Sellers</div>
+              <div class="farming-source-sub">ebay.it</div>
+            </div>
+            <div class="farming-source-card" onclick="selectFarmingSource('amazon')" id="fsrc-amazon">
+              <div class="farming-source-icon">📦</div>
+              <div class="farming-source-name">Amazon Sellers</div>
+              <div class="farming-source-sub">amazon.it</div>
+            </div>
+            <div class="farming-source-card" onclick="selectFarmingSource('custom')" id="fsrc-custom">
+              <div class="farming-source-icon">📄</div>
+              <div class="farming-source-name">File CSV / Excel</div>
+              <div class="farming-source-sub">Qualsiasi fonte</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Istruzioni + ricerca -->
+        <div class="farming-step-card" id="farming-step2" style="display:none;">
+          <div class="farming-step-header">
+            <span class="farming-step-num">2</span>
+            <div>
+              <div style="font-size:15px;font-weight:700;" id="farming-step2-title">Cerca e scarica i lead</div>
+              <div style="font-size:12.5px;color:var(--text2);margin-top:2px;" id="farming-step2-sub">Segui le istruzioni per raccogliere i dati</div>
+            </div>
+          </div>
+          <div id="farming-instructions-area"></div>
+        </div>
+
+        <!-- STEP 3: Import -->
+        <div class="farming-step-card" id="farming-step3" style="display:none;">
+          <div class="farming-step-header">
+            <span class="farming-step-num">3</span>
+            <div>
+              <div style="font-size:15px;font-weight:700;">Importa il file nel CRM</div>
+              <div style="font-size:12.5px;color:var(--text2);margin-top:2px;">Carica il CSV/Excel — la mappatura avviene automaticamente</div>
+            </div>
+          </div>
+
+          <!-- Column mapping hint -->
+          <div class="farming-info-box" id="farming-column-hint"></div>
+
+          <!-- Upload zone -->
+          <div class="upload-zone" style="padding:28px;margin-bottom:16px;" onclick="document.getElementById('farming-file-input').click()" id="farming-drop-zone">
+            <div style="font-size:30px;margin-bottom:8px;">🌱</div>
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Clicca o trascina il file CSV / Excel</div>
+            <div class="upload-sub">Supporta .csv · .xlsx · .xls</div>
+          </div>
+          <input type="file" id="farming-file-input" accept=".csv,.xlsx,.xls" style="display:none" onchange="handleFarmingImport(this)">
+
+          <!-- Preview table -->
+          <div id="farming-preview" style="display:none;">
+            <div style="font-size:13px;font-weight:700;margin-bottom:10px;" id="farming-preview-title"></div>
+            <!-- Column mapping -->
+            <div id="farming-col-mapping" style="margin-bottom:16px;"></div>
+            <!-- Data preview -->
+            <div id="farming-preview-table" style="overflow-x:auto;max-height:280px;overflow-y:auto;border-radius:var(--radius-sm);border:1px solid var(--border);"></div>
+            <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center;">
+              <button class="btn btn-primary" onclick="confirmFarmingImport()">✅ Importa <span id="farming-import-count"></span> Contatti</button>
+              <button class="btn btn-secondary" onclick="resetFarming()">↩ Ricomincia</button>
+              <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
+                <label style="font-size:12.5px;color:var(--text2);">Assegna agente:</label>
+                <select class="filter-select" id="farming-assign-agent" style="font-size:12px;padding:6px 10px;">
+                  <option value="">— Nessuno (assegna dopo) —</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4: Risultato -->
+        <div class="farming-step-card" id="farming-step4" style="display:none;">
+          <div class="farming-step-header">
+            <span class="farming-step-num" style="background:var(--green);">✓</span>
+            <div>
+              <div style="font-size:15px;font-weight:700;">Import completato!</div>
+              <div style="font-size:12.5px;color:var(--text2);margin-top:2px;" id="farming-result-sub"></div>
+            </div>
+          </div>
+          <div id="farming-result-stats" style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px;"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="showSection('contacts')">👥 Vai ai Contatti</button>
+            <button class="btn btn-secondary" onclick="resetFarming()">🌱 Nuovo Import</button>
+          </div>
+        </div>
+
+        <!-- Storico import -->
+        <div class="farming-step-card" style="margin-top:8px;" id="farming-history-card">
+          <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text2);">📋 Storico Import Farming</div>
+          <div id="farming-history-list">
+            <div style="font-size:13px;color:var(--text3);">Nessun import ancora effettuato.</div>
+          </div>
+        </div>
+      </div>
+
       <div class="section" id="section-pannello">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
           <h2 style="font-size:17px;font-weight:700;">⚙️ Pannello di Controllo Amministratore</h2>
@@ -1690,7 +1848,7 @@ function showSection(name) {
   document.querySelectorAll('.nav-item').forEach(n=>{
     if(n.getAttribute('onclick')===`showSection('${name}')`) n.classList.add('active');
   });
-  const titles = {contacts:'Contatti',work:'Lavoro in Corso',team:'Gestione Team',stats:'Statistiche',clienti:'Clienti',calcoli:'Calcoli',profilo:'Il Mio Profilo',pannello:'Pannello di Controllo'};
+  const titles = {contacts:'Contatti',work:'Lavoro in Corso',team:'Gestione Team',stats:'Statistiche',clienti:'Clienti',calcoli:'Calcoli',farming:'🌱 Farming',profilo:'Il Mio Profilo',pannello:'Pannello di Controllo'};
   document.getElementById('page-title').textContent = titles[name]||'';
   const btn = document.getElementById('topbar-action');
   const expBtn = document.getElementById('btn-export');
@@ -1707,6 +1865,7 @@ function showSection(name) {
   if(name==='calcoli')  { populateCalcoliFilters(); renderCalcoli(); }
   if(name==='profilo')  { renderProfilo(); }
   if(name==='pannello') { renderPannello(); }
+  if(name==='farming')  { renderFarming(); }
   updateMobileNav(name);
 }
 
@@ -2223,9 +2382,15 @@ function renderKanban() {
   const board = document.getElementById('kanban-board');
   board.innerHTML = WORK_STATUSES.map(s=>{
     let items = workItems.filter(w=>w.status===s.key);
-    // filter by agent
-    if(isAgent) items = items.filter(w=>{ const c=contacts.find(x=>x.id===w.contactId); return !c?.agente || c.agente===currentUser.id; });
-    else if(filterAgent) items = items.filter(w=>{ const c=contacts.find(x=>x.id===w.contactId); return c?.agente===filterAgent; });
+    // filter by agent — handles both contact and client work items
+    if(isAgent) items = items.filter(w=>{
+      if(w.isClient && w.clientId){ const cl=clients.find(x=>x.id===w.clientId); return !cl?.agente || cl.agente===currentUser.id; }
+      const c=contacts.find(x=>x.id===w.contactId); return !c?.agente || c.agente===currentUser.id;
+    });
+    else if(filterAgent) items = items.filter(w=>{
+      if(w.isClient && w.clientId){ const cl=clients.find(x=>x.id===w.clientId); return cl?.agente===filterAgent; }
+      const c=contacts.find(x=>x.id===w.contactId); return c?.agente===filterAgent;
+    });
     const expanded = colExpanded[s.key]!==false;
     return `<div class="kanban-col ${s.accent}">
       <div class="kanban-col-header" onclick="toggleCol('${s.key}')">
@@ -3874,6 +4039,344 @@ function openGCalendar(wid){
   }
   const url='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+title+'&details='+det+'&location='+location+'&dates='+dates;
   window.open(url,'_blank');
+}
+
+
+// ═══════════════════════════════════════════════════════════
+// FARMING
+// ═══════════════════════════════════════════════════════════
+let farmingSource = 'paginegialle';
+let farmingRawData = [];
+let farmingColMap = {};
+let farmingHistory = JSON.parse(localStorage.getItem('crm_farming_history')||'[]');
+
+const FARMING_SOURCES = {
+  paginegialle: {
+    name: 'Pagine Gialle',
+    icon: '🟡',
+    color: '#fbbf24',
+    instructions: [
+      {step:'Apri Pagine Gialle', text:'Clicca il pulsante qui sotto per aprire <b>paginegialle.it</b>. Puoi cercare per categoria (es. "idraulici") e città (es. "Napoli").'},
+      {step:'Cerca la tua categoria', text:'Nella barra di ricerca inserisci <b>categoria</b> e <b>città</b> che ti interessano. Esempio: <b>Ristoranti · Milano</b> oppure <b>Commercialisti · Roma</b>.'},
+      {step:'Usa Octoparse (gratuito)', text:'Installa <b>Octoparse</b> (octoparse.com — gratuito), carica il template per Pagine Gialle e avvia l&#39;estrazione. Esporta in <b>CSV o Excel</b>.'},
+      {step:'In alternativa: copia manuale', text:'Puoi anche copiare manualmente i risultati in un file Excel con le colonne: <b>Nome, Telefono, Indirizzo, Città, Sito Web</b>.'},
+      {step:'Carica il file', text:'Torna qui e carica il file nel <b>Step 3</b> — la mappatura avviene automaticamente.'},
+    ],
+    openUrl: 'https://www.paginegialle.it',
+    columnHint: '<b>Colonne riconosciute automaticamente:</b> nome / ragione_sociale / name · telefono / phone / telephone · indirizzo / address · citta / city / locality · sito / website / url · email · categoria / category',
+    colAliases: {ragione:['name','nome','ragione_sociale','ragione sociale','business name','denominazione','ditta','azienda'],telefono:['phone','telefono','telephone','tel','cellulare','mobile'],indirizzo:['address','indirizzo','via','street'],citta:['city','citta','città','locality','comune','municipality'],email:['email','e-mail','pec','mail'],sito:['website','sito','url','web','sito web','homepage'],categoria:['category','categoria','settore','attivita','attività']}
+  },
+  googlemaps: {
+    name: 'Google Maps',
+    icon: '🗺',
+    color: '#4f7cff',
+    instructions: [
+      {step:'Apri Google Maps', text:'Clicca il pulsante per aprire <b>Google Maps</b>. Cerca la categoria di attività e la zona geografica.'},
+      {step:'Usa Scrap.io o Outscraper', text:'<b>Scrap.io</b> offre 100 lead gratis: cerca su Google Maps e scarica il CSV direttamente. In alternativa usa <b>Outscraper</b> (5.000 lead/mese, $129 una tantum).'},
+      {step:'Esporta CSV', text:'Una volta estratti i dati, scarica il file <b>CSV o Excel</b> dalla piattaforma che hai usato.'},
+      {step:'Carica il file', text:'Torna qui e carica il file nel <b>Step 3</b>.'},
+    ],
+    openUrl: 'https://maps.google.com',
+    columnHint: '<b>Compatibile con export di:</b> Scrap.io, Outscraper, GMapsScraper. Colonne riconosciute: name, phone, address, city, website, email, category, rating.',
+    colAliases: {ragione:['name','nome','business_name','title','place_name'],telefono:['phone','phone_number','telephone','phones'],indirizzo:['address','full_address','street_address','formatted_address'],citta:['city','locality','municipality','city_name'],email:['email','emails','email_address'],sito:['website','site','url','website_url'],categoria:['category','categories','type','business_type']}
+  },
+  linkedin: {
+    name: 'LinkedIn',
+    icon: '💼',
+    color: '#0077b5',
+    instructions: [
+      {step:'Apri LinkedIn', text:'Vai su <b>LinkedIn Sales Navigator</b> o fai una ricerca avanzata su LinkedIn per aziende nel tuo settore target.'},
+      {step:'Usa Phantombuster o Apollo', text:'<b>Phantombuster</b> (prova gratuita) e <b>Apollo.io</b> (piano gratuito con 50 lead/mese) permettono di esportare i dati aziende LinkedIn in CSV.'},
+      {step:'Esporta CSV', text:'Scarica il file CSV con i dati delle aziende trovate.'},
+      {step:'Carica il file', text:'Torna qui e carica il file nel <b>Step 3</b>.'},
+    ],
+    openUrl: 'https://www.linkedin.com/search/results/companies/',
+    columnHint: '<b>Compatibile con export di:</b> Phantombuster, Apollo.io, Sales Navigator. Colonne: company_name, phone, location, website, industry.',
+    colAliases: {ragione:['company_name','company','organization','name','account_name'],telefono:['phone','direct_phone','company_phone','number'],indirizzo:['location','address','headquarters','hq_location'],citta:['city','region','country'],email:['email','business_email','work_email'],sito:['website','company_website','web','url'],categoria:['industry','sector','category','vertical']}
+  },
+  ebay: {
+    name: 'eBay Sellers',
+    icon: '🛒',
+    color: '#e53238',
+    instructions: [
+      {step:'Cerca venditori eBay', text:'Cerca prodotti nel tuo settore su <b>eBay Italia</b>. Identifica i venditori professionali (quelli con molte vendite e feedback positivi).'},
+      {step:'Usa Apify', text:'Su <b>Apify.com</b> (piano gratuito $5/mese di crediti) trovi l&#39;actor "eBay Scraper" per estrarre i dati dei venditori con categorie, feedback e informazioni di contatto.'},
+      {step:'Esporta CSV', text:'Scarica il file CSV con i dati dei seller.'},
+      {step:'Carica il file', text:'Torna qui e carica il file nel <b>Step 3</b>.'},
+    ],
+    openUrl: 'https://www.ebay.it',
+    columnHint: '<b>Compatibile con:</b> Apify eBay Scraper. Colonne: seller_name, feedback_score, location, store_url, category.',
+    colAliases: {ragione:['seller_name','seller','name','username','store_name'],telefono:['phone','contact'],indirizzo:['location','address','city'],citta:['city','location'],email:['email'],sito:['store_url','url','website','profile_url'],categoria:['category','categories','product_type']}
+  },
+  amazon: {
+    name: 'Amazon Sellers',
+    icon: '📦',
+    color: '#ff9900',
+    instructions: [
+      {step:'Cerca su Amazon', text:'Cerca prodotti nel tuo settore su <b>Amazon Italia</b>. I venditori di terze parti sono i tuoi potenziali lead.'},
+      {step:'Usa Apify o Seller Directories', text:'Su <b>Apify.com</b> cerca l&#39;actor "Amazon Seller Scraper". In alternativa usa <b>SellerApp</b> o <b>Jungle Scout</b> che hanno piani gratuiti limitati.'},
+      {step:'Esporta CSV', text:'Scarica il file con nome venditore, categoria prodotti, sede.'},
+      {step:'Carica il file', text:'Torna qui e carica il file nel <b>Step 3</b>.'},
+    ],
+    openUrl: 'https://www.amazon.it',
+    columnHint: '<b>Compatibile con:</b> Apify Amazon Scraper. Colonne: seller_name, business_name, location, categories.',
+    colAliases: {ragione:['seller_name','business_name','seller','brand_name','name'],telefono:['phone'],indirizzo:['address','location'],citta:['city','location','country'],email:['email'],sito:['store_url','seller_url','storefront_url'],categoria:['category','main_category','product_category']}
+  },
+  custom: {
+    name: 'File CSV/Excel',
+    icon: '📄',
+    color: '#27c98f',
+    instructions: [
+      {step:'Prepara il tuo file', text:'Crea o scarica un file <b>CSV o Excel</b> con i tuoi lead. Non serve un formato specifico — la mappatura colonne è automatica.'},
+      {step:'Colonne consigliate', text:'Per un import ottimale includi: <b>Nome/Ragione Sociale · Telefono · Indirizzo · Città · Email · Sito Web · Categoria</b>. Puoi avere colonne con nomi diversi — le mapperemo manualmente.'},
+      {step:'Carica il file', text:'Trascina il file nella zona di upload del <b>Step 3</b> qui sotto.'},
+    ],
+    openUrl: null,
+    columnHint: '<b>Formato libero</b> — puoi mappare manualmente ogni colonna del tuo file al campo CRM corretto.',
+    colAliases: {ragione:['name','nome','ragione','azienda','company','denominazione','ditta','business'],telefono:['phone','tel','telefono','cellulare','mobile'],indirizzo:['address','indirizzo','via'],citta:['city','citta','città','comune'],email:['email','mail','pec'],sito:['website','sito','url','web'],categoria:['category','categoria','settore']}
+  }
+};
+
+const CRM_FIELDS = [
+  {key:'ragione', label:'Ragione Sociale *', required:true},
+  {key:'telefono', label:'Telefono'},
+  {key:'indirizzo', label:'Indirizzo'},
+  {key:'citta', label:'Città'},
+  {key:'email1', label:'Email'},
+  {key:'sito', label:'Sito Web'},
+  {key:'categoria', label:'Categoria'},
+  {key:'skip', label:'— Ignora colonna —'},
+];
+
+function renderFarming(){
+  renderFarmingHistory();
+  populateFarmingAgents();
+}
+
+function populateFarmingAgents(){
+  const sel = document.getElementById('farming-assign-agent');
+  if(!sel) return;
+  while(sel.options.length>1) sel.remove(1);
+  users.filter(u=>u.ruolo==='Agente'||u.ruolo==='Responsabile').forEach(u=>{
+    const o=document.createElement('option'); o.value=u.id; o.textContent=u.nome+' '+u.cognome; sel.appendChild(o);
+  });
+}
+
+function selectFarmingSource(src){
+  farmingSource = src;
+  document.querySelectorAll('.farming-source-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('fsrc-'+src).classList.add('active');
+  showFarmingStep2();
+}
+
+function showFarmingStep2(){
+  const s = FARMING_SOURCES[farmingSource];
+  document.getElementById('farming-step2').style.display='';
+  document.getElementById('farming-step3').style.display='';
+  document.getElementById('farming-step2-title').textContent = 'Raccolta lead da ' + s.name;
+  document.getElementById('farming-step2-sub').textContent = 'Segui le istruzioni per ottenere il file da importare';
+
+  let html = '<div class="farming-instructions">';
+  s.instructions.forEach((instr,i)=>{
+    html += '<div class="farming-instr-step">'
+      + '<div class="farming-instr-num">'+(i+1)+'</div>'
+      + '<div class="farming-instr-text"><b>'+instr.step+'</b> — '+instr.text+'</div>'
+      + '</div>';
+  });
+  html += '</div>';
+  if(s.openUrl){
+    html += '<a href="'+s.openUrl+'" target="_blank" class="farming-open-btn" style="background:'+s.color+';color:#fff;">'+s.icon+' Apri '+s.name+'</a>';
+  }
+  document.getElementById('farming-instructions-area').innerHTML = html;
+  document.getElementById('farming-column-hint').innerHTML = s.columnHint;
+  farmingRawData=[];
+  document.getElementById('farming-preview').style.display='none';
+  document.getElementById('farming-file-input').value='';
+}
+
+function handleFarmingImport(input){
+  const file = input.files[0]; if(!file) return;
+  const ext = file.name.split('.').pop().toLowerCase();
+  if(ext==='csv'){
+    const reader = new FileReader();
+    reader.onload=e=>{
+      const text=e.target.result;
+      const delim = text.includes(';') ? ';' : ',';
+      const lines = text.split('\n').filter(l=>l.trim());
+      const headers = lines[0].split(delim).map(h=>h.replace(/['"]/g,'').trim());
+      const rows = lines.slice(1).map(l=>{
+        const vals=[]; let cur='',inQ=false;
+        for(let c of l){if(c==='"'){inQ=!inQ;}else if(c===delim&&!inQ){vals.push(cur.trim());cur='';}else{cur+=c;}}
+        vals.push(cur.trim());
+        return headers.reduce((o,h,i)=>{o[h]=vals[i]||'';return o;},{});
+      }).filter(r=>Object.values(r).some(v=>v));
+      farmingRawData = rows;
+      showFarmingPreview(headers, rows);
+    };
+    reader.readAsText(file,'UTF-8');
+  } else {
+    if(typeof XLSX==='undefined'){ showNotif(null,'⚠️','Libreria Excel non disponibile. Usa CSV.'); return; }
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const data=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+      if(!data.length) return;
+      const headers=data[0].map(h=>String(h).trim());
+      const rows=data.slice(1).map(r=>headers.reduce((o,h,i)=>{o[h]=String(r[i]||'').trim();return o;},{})).filter(r=>Object.values(r).some(v=>v));
+      farmingRawData=rows;
+      showFarmingPreview(headers,rows);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+}
+
+function showFarmingPreview(headers, rows){
+  if(!rows.length){ showNotif(null,'⚠️','File vuoto o non riconosciuto.'); return; }
+  const s = FARMING_SOURCES[farmingSource];
+  const aliases = s.colAliases;
+
+  // Auto-map columns
+  farmingColMap = {};
+  headers.forEach(h=>{
+    const hl = h.toLowerCase().replace(/[\u0020_-]/g,'');
+    for(const [field, aliasList] of Object.entries(aliases)){
+      if(aliasList.some(a=>a.replace(/[\u0020_-]/g,'')===hl||hl.includes(a.replace(/[\u0020_-]/g,'')))){
+        if(!farmingColMap[h]) farmingColMap[h] = field==='ragione'?'ragione':field==='email1'?'email1':field;
+        break;
+      }
+    }
+    if(!farmingColMap[h]) farmingColMap[h]='skip';
+  });
+
+  document.getElementById('farming-preview-title').textContent = rows.length+' lead trovati — verifica mappatura colonne:';
+
+  // Column mapping UI
+  let mapHtml='<div class="farming-col-map-grid">';
+  headers.forEach(h=>{
+    mapHtml+='<div class="farming-col-map-item">'
+      +'<div class="farming-col-map-label">Colonna: <b>'+h+'</b></div>'
+      +'<select class="farming-col-map-select" data-col="'+h+'" onchange="farmingColMap[this.dataset.col]=this.value">';
+    CRM_FIELDS.forEach(f=>{
+      const sel = farmingColMap[h]===f.key?'selected':'';
+      mapHtml+='<option value="'+f.key+'" '+sel+'>'+f.label+'</option>';
+    });
+    mapHtml+='</select></div>';
+  });
+  mapHtml+='</div>';
+  document.getElementById('farming-col-mapping').innerHTML=mapHtml;
+
+  // Preview table (first 8 rows)
+  const preview = rows.slice(0,8);
+  let tblHtml='<table class="farming-preview-tbl"><thead><tr>';
+  headers.forEach(h=>{ tblHtml+='<th>'+h+'</th>'; });
+  tblHtml+='</tr></thead><tbody>';
+  preview.forEach(row=>{
+    tblHtml+='<tr>';
+    headers.forEach(h=>{ tblHtml+='<td title="'+(row[h]||'')+'">'+((row[h]||'').substring(0,30)+(row[h]&&row[h].length>30?'…':''))+'</td>'; });
+    tblHtml+='</tr>';
+  });
+  tblHtml+='</tbody></table>';
+  document.getElementById('farming-preview-table').innerHTML=tblHtml;
+  document.getElementById('farming-import-count').textContent=rows.length;
+  document.getElementById('farming-preview').style.display='';
+  populateFarmingAgents();
+}
+
+function confirmFarmingImport(){
+  if(!farmingRawData.length) return;
+  const agentId = document.getElementById('farming-assign-agent').value;
+  const src = FARMING_SOURCES[farmingSource];
+  let imported=0, skipped=0, dupes=0;
+
+  farmingRawData.forEach(row=>{
+    // Build CRM contact from mapped columns
+    const mapped = {};
+    Object.entries(farmingColMap).forEach(([col,field])=>{
+      if(field!=='skip' && row[col]) mapped[field] = row[col];
+    });
+    if(!mapped.ragione){ skipped++; return; }
+    // Check duplicate by ragione sociale or telefono
+    const isDupe = contacts.some(c=>
+      (c.ragione&&mapped.ragione&&c.ragione.toLowerCase().trim()===mapped.ragione.toLowerCase().trim()) ||
+      (c.telefono&&mapped.telefono&&c.telefono.replace(/ /g,'')===mapped.telefono.replace(/ /g,''))
+    );
+    if(isDupe){ dupes++; return; }
+    contacts.push({
+      id: genId(),
+      ragione: mapped.ragione||'',
+      telefono: mapped.telefono||'',
+      cellulare: '',
+      indirizzo_operativo: mapped.indirizzo||'',
+      indirizzo_fiscale: '',
+      citta: mapped.citta||'',
+      email1: mapped.email1||mapped.email||'',
+      sito_web: mapped.sito||'',
+      categoria: mapped.categoria||'',
+      agente: agentId||'',
+      fonte: src.name,
+      fonte_icon: src.icon,
+      data_import: new Date().toISOString().split('T')[0],
+    });
+    imported++;
+  });
+
+  save();
+  // Save to history
+  const histItem = {
+    id: genId(),
+    date: new Date().toLocaleString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),
+    source: src.name, icon: src.icon,
+    imported, skipped, dupes,
+    agent: agentId ? getUserName(agentId) : '—'
+  };
+  farmingHistory.unshift(histItem);
+  if(farmingHistory.length>20) farmingHistory=farmingHistory.slice(0,20);
+  localStorage.setItem('crm_farming_history', JSON.stringify(farmingHistory));
+
+  // Show result
+  document.getElementById('farming-step4').style.display='';
+  document.getElementById('farming-step3').style.display='none';
+  document.getElementById('farming-step2').style.display='none';
+  document.getElementById('farming-step1').style.display='none';
+  document.getElementById('farming-result-sub').textContent = src.icon+' '+src.name+' · '+histItem.date;
+  document.getElementById('farming-result-stats').innerHTML =
+    '<div class="calcoli-kpi" style="flex:1;min-width:120px;"><div class="calcoli-kpi-val" style="color:var(--green)">'+imported+'</div><div class="calcoli-kpi-label">Importati</div></div>'+
+    '<div class="calcoli-kpi" style="flex:1;min-width:120px;"><div class="calcoli-kpi-val" style="color:var(--yellow)">'+dupes+'</div><div class="calcoli-kpi-label">Duplicati saltati</div></div>'+
+    '<div class="calcoli-kpi" style="flex:1;min-width:120px;"><div class="calcoli-kpi-val" style="color:var(--text3)">'+skipped+'</div><div class="calcoli-kpi-label">Righe senza nome</div></div>';
+  renderFarmingHistory();
+}
+
+function resetFarming(){
+  farmingRawData=[]; farmingColMap={};
+  document.getElementById('farming-step1').style.display='';
+  document.getElementById('farming-step2').style.display='none';
+  document.getElementById('farming-step3').style.display='none';
+  document.getElementById('farming-step4').style.display='none';
+  document.getElementById('farming-preview').style.display='none';
+  document.getElementById('farming-file-input').value='';
+  document.querySelectorAll('.farming-source-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('fsrc-paginegialle').classList.add('active');
+  farmingSource='paginegialle';
+}
+
+function renderFarmingHistory(){
+  const el = document.getElementById('farming-history-list');
+  if(!el) return;
+  if(!farmingHistory.length){ el.innerHTML='<div style="font-size:13px;color:var(--text3);">Nessun import ancora effettuato.</div>'; return; }
+  el.innerHTML = farmingHistory.slice(0,10).map(h=>
+    '<div class="farming-hist-row">'
+    +'<div style="display:flex;align-items:center;gap:10px;">'
+    +'<span style="font-size:18px;">'+h.icon+'</span>'
+    +'<div><div style="font-weight:600;font-size:13px;">'+h.source+'</div>'
+    +'<div style="font-size:11.5px;color:var(--text3);">'+h.date+(h.agent&&h.agent!=='—'?' · Agente: '+h.agent:'')+'</div></div>'
+    +'</div>'
+    +'<div style="display:flex;gap:8px;align-items:center;">'
+    +'<span class="farming-hist-badge">+'+h.imported+' importati</span>'
+    +(h.dupes?'<span style="font-size:11px;color:var(--text3);">'+h.dupes+' dupl.</span>':'')
+    +'</div>'
+    +'</div>'
+  ).join('');
 }
 
 // ═══════════════════════════════════════════════════════════
