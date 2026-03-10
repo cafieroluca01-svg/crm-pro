@@ -161,18 +161,41 @@ textarea.form-input{resize:vertical;min-height:72px;}
 
 /* ── KANBAN ──────────────────────────────────── */
 .kanban-board{display:flex;flex-direction:column;gap:10px;}
+/* ── PIPELINE ─────────────────────────────────────────── */
+.pipeline-nav{display:flex;align-items:stretch;gap:0;position:relative;}
+.pipeline-arrow{background:var(--surface);border:1px solid var(--border);color:var(--text2);font-size:18px;padding:0 16px;cursor:pointer;border-radius:var(--radius-sm);transition:all .15s;flex-shrink:0;min-height:64px;}
+.pipeline-arrow:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+.pipeline-arrow:disabled{opacity:.25;cursor:default;}
+.pipeline-col-wrap{flex:1;overflow:hidden;position:relative;}
+.pipeline-col{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;width:100%;}
+.pipeline-col-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);user-select:none;}
+.pipeline-col-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:9px;}
+.col-count{background:var(--surface2);color:var(--text2);padding:2px 9px;border-radius:20px;font-size:12px;font-weight:600;}
+.pipeline-col-body{padding:10px;}
+.pipeline-dots{display:flex;justify-content:center;gap:7px;margin-top:12px;flex-wrap:wrap;}
+.pipeline-dot{width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s;border:2px solid transparent;}
+.pipeline-dot.active{background:var(--accent);transform:scale(1.2);}
+.pipeline-dot.has-items{border-color:var(--text3);}
+.pipeline-drop-hint{display:none;position:fixed;top:50%;left:0;transform:translateY(-50%);background:rgba(79,124,255,.18);border:2px dashed var(--accent);color:var(--accent);font-size:13px;font-weight:700;padding:16px 12px;border-radius:0 var(--radius) var(--radius) 0;z-index:200;cursor:pointer;transition:background .15s;width:80px;text-align:center;}
+.pipeline-drop-hint.right{left:auto;right:0;border-radius:var(--radius) 0 0 var(--radius);}
+.pipeline-drop-hint.drag-active{display:flex;align-items:center;justify-content:center;}
+.pipeline-drop-hint.drag-over{background:rgba(79,124,255,.4);}
+/* kanban col (legacy, used inside pipeline) */
 .kanban-col{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 .kanban-col-header{padding:11px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;}
 .kanban-col-title{font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;}
-.col-count{background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:20px;font-size:11px;}
 .col-toggle{color:var(--text3);font-size:11px;transition:transform .2s;}
 .col-toggle.open{transform:rotate(180deg);}
 .kanban-cards{padding:8px;display:flex;flex-direction:column;gap:7px;min-height:48px;}
 .kanban-cards.drag-over{background:rgba(79,124,255,.08);border-radius:var(--radius-sm);}
-.kanban-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;cursor:grab;transition:box-shadow .15s;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;}
+.kanban-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 13px;cursor:grab;transition:box-shadow .15s,border-color .15s;display:flex;flex-direction:column;gap:0;}
 .kanban-card:active{cursor:grabbing;}
 .kanban-card.dragging{opacity:.35;}
 .kanban-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.3);border-color:var(--accent);}
+.kanban-card-compact{padding:8px 13px;}
+.card-header-row{display:flex;align-items:center;gap:6px;min-width:0;}
+.card-expanded-body{display:flex;flex-direction:column;gap:5px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+.card-expand-btn{background:transparent!important;border:none!important;font-size:10px!important;}
 .card-left{display:flex;flex-direction:column;gap:5px;}
 .card-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
 .card-name{font-size:13px;font-weight:600;}
@@ -384,8 +407,8 @@ textarea.form-input{resize:vertical;min-height:72px;}
   .auth-header{padding:28px 22px 0;}
 
   /* Kanban — horizontal scroll */
-  .kanban-board{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
-  .kanban-col{min-width:280px;max-width:280px;flex-shrink:0;scroll-snap-align:start;}
+  .pipeline-arrow{min-height:48px;padding:0 10px;font-size:15px;}
+  .pipeline-drop-hint{width:56px;font-size:11px;padding:12px 6px;}
 
   /* Contact list */
   .contact-row{grid-template-columns:1fr auto!important;gap:4px;}
@@ -455,6 +478,24 @@ textarea.form-input{resize:vertical;min-height:72px;}
 .farming-hist-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:6px;font-size:12.5px;}
 .farming-hist-row:last-child{margin-bottom:0;}
 .farming-hist-badge{display:inline-flex;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:600;background:rgba(39,201,143,.15);color:var(--green);}
+.farming-tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:2px solid var(--border);}
+.farming-tab{background:transparent;border:none;padding:10px 20px;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer;font-family:inherit;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;}
+.farming-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.farming-tab:hover{color:var(--text);}
+.farming-quick-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:5px 10px;border-radius:20px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.farming-quick-btn:hover{border-color:var(--accent);color:var(--accent);}
+.farming-place-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:flex-start;gap:12px;transition:border-color .15s;}
+.farming-place-card:hover{border-color:var(--accent);}
+.farming-place-card.already-imported{opacity:.45;border-style:dashed;}
+.farming-place-card.selected{border-color:var(--green);background:rgba(39,201,143,.06);}
+.farming-place-info{flex:1;min-width:0;}
+.farming-place-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.farming-place-meta{font-size:11.5px;color:var(--text3);display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.farming-place-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:10.5px;background:var(--surface);border:1px solid var(--border);}
+@media(max-width:768px){
+  .farming-source-grid{grid-template-columns:repeat(2,1fr);}
+  .farming-step-card{padding:14px;}
+}
 </style>
 </head>
 <body>
@@ -641,14 +682,33 @@ textarea.form-input{resize:vertical;min-height:72px;}
 
       <!-- WORK -->
       <div class="section" id="section-work">
+        <!-- Toolbar -->
         <div class="toolbar" style="margin-bottom:16px;">
-          <button class="btn btn-primary" onclick="openAddToWork()">+ Aggiungi a Lavorazione</button>
+          <button class="btn btn-primary" onclick="openAddToWork()">+ Aggiungi</button>
           <select class="filter-select" id="work-filter-agent" onchange="renderKanban()">
             <option value="">Tutti gli agenti</option>
           </select>
-          <span style="font-size:12.5px;color:var(--text2);margin-left:4px;">Trascina le card per cambiare stato</span>
+          <button class="btn btn-secondary btn-sm" onclick="toggleAllCols()" id="btn-toggle-all-cols" title="Espandi/Comprimi tutte">☰ Vista compatta</button>
         </div>
-        <div class="kanban-board" id="kanban-board"></div>
+        <!-- Pipeline navigator -->
+        <div class="pipeline-nav" id="pipeline-nav">
+          <button class="pipeline-arrow" id="pipe-prev" onclick="pipelineNav(-1)">◀</button>
+          <div class="pipeline-col-wrap" id="pipeline-col-wrap">
+            <!-- rendered by JS -->
+          </div>
+          <button class="pipeline-arrow" id="pipe-next" onclick="pipelineNav(1)">▶</button>
+        </div>
+        <!-- Dots indicator -->
+        <div class="pipeline-dots" id="pipeline-dots"></div>
+        <!-- Phase popup modal -->
+        <div id="phase-popup-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;" onclick="closePhasePopup()">
+          <div id="phase-popup" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;min-width:320px;max-width:420px;width:90%;" onclick="event.stopPropagation()">
+            <div style="font-size:14px;font-weight:700;margin-bottom:4px;" id="phase-popup-name"></div>
+            <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Seleziona la fase da assegnare:</div>
+            <div id="phase-popup-phases" style="display:flex;flex-direction:column;gap:7px;"></div>
+            <button class="btn btn-secondary btn-sm" style="margin-top:14px;width:100%;" onclick="closePhasePopup()">✕ Chiudi</button>
+          </div>
+        </div>
       </div>
 
       <!-- STATISTICS -->
@@ -889,103 +949,194 @@ textarea.form-input{resize:vertical;min-height:72px;}
 
       <!-- FARMING -->
       <div class="section" id="section-farming">
-        <!-- STEP 1: Sorgente -->
-        <div class="farming-step-card" id="farming-step1">
-          <div class="farming-step-header">
-            <span class="farming-step-num">1</span>
-            <div>
-              <div style="font-size:15px;font-weight:700;">Scegli la sorgente dei lead</div>
-              <div style="font-size:12.5px;color:var(--text2);margin-top:2px;">Seleziona da dove vuoi importare i nuovi contatti</div>
-            </div>
-          </div>
-          <div class="farming-source-grid" id="farming-sources">
-            <div class="farming-source-card active" onclick="selectFarmingSource('paginegialle')" id="fsrc-paginegialle">
-              <div class="farming-source-icon">🟡</div>
-              <div class="farming-source-name">Pagine Gialle</div>
-              <div class="farming-source-sub">paginegialle.it</div>
-            </div>
-            <div class="farming-source-card" onclick="selectFarmingSource('googlemaps')" id="fsrc-googlemaps">
-              <div class="farming-source-icon">🗺</div>
-              <div class="farming-source-name">Google Maps</div>
-              <div class="farming-source-sub">maps.google.com</div>
-            </div>
-            <div class="farming-source-card" onclick="selectFarmingSource('linkedin')" id="fsrc-linkedin">
-              <div class="farming-source-icon">💼</div>
-              <div class="farming-source-name">LinkedIn</div>
-              <div class="farming-source-sub">linkedin.com</div>
-            </div>
-            <div class="farming-source-card" onclick="selectFarmingSource('ebay')" id="fsrc-ebay">
-              <div class="farming-source-icon">🛒</div>
-              <div class="farming-source-name">eBay Sellers</div>
-              <div class="farming-source-sub">ebay.it</div>
-            </div>
-            <div class="farming-source-card" onclick="selectFarmingSource('amazon')" id="fsrc-amazon">
-              <div class="farming-source-icon">📦</div>
-              <div class="farming-source-name">Amazon Sellers</div>
-              <div class="farming-source-sub">amazon.it</div>
-            </div>
-            <div class="farming-source-card" onclick="selectFarmingSource('custom')" id="fsrc-custom">
-              <div class="farming-source-icon">📄</div>
-              <div class="farming-source-name">File CSV / Excel</div>
-              <div class="farming-source-sub">Qualsiasi fonte</div>
-            </div>
-          </div>
+
+        <!-- TAB BAR -->
+        <div class="farming-tabs">
+          <button class="farming-tab active" id="ftab-places" onclick="switchFarmingTab('places')">🗺 Google Maps Live</button>
+          <button class="farming-tab" id="ftab-csv" onclick="switchFarmingTab('csv')">📄 Import CSV/Excel</button>
         </div>
 
-        <!-- STEP 2: Istruzioni + ricerca -->
-        <div class="farming-step-card" id="farming-step2" style="display:none;">
-          <div class="farming-step-header">
-            <span class="farming-step-num">2</span>
-            <div>
-              <div style="font-size:15px;font-weight:700;" id="farming-step2-title">Cerca e scarica i lead</div>
-              <div style="font-size:12.5px;color:var(--text2);margin-top:2px;" id="farming-step2-sub">Segui le istruzioni per raccogliere i dati</div>
+        <!-- ══ TAB: GOOGLE PLACES ══════════════════════════════ -->
+        <div id="farming-tab-places">
+
+          <!-- API Key setup -->
+          <div class="farming-step-card" id="farming-apikey-card">
+            <div class="farming-step-header">
+              <span class="farming-step-num" id="farming-apikey-num">🔑</span>
+              <div>
+                <div style="font-size:15px;font-weight:700;">Configura Google Places API</div>
+                <div style="font-size:12.5px;color:var(--text2);margin-top:2px;">Necessaria una sola volta — la chiave viene salvata nel browser</div>
+              </div>
+              <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="toggleApikeyPanel()" id="farming-apikey-toggle">⚙️ Configura</button>
+            </div>
+            <div id="farming-apikey-panel" style="display:none;margin-top:12px;">
+              <div class="farming-info-box" style="margin-bottom:12px;">
+                <b>Come ottenere la chiave gratuita:</b><br>
+                1. Vai su <a href="https://console.cloud.google.com" target="_blank" style="color:var(--accent);">console.cloud.google.com</a><br>
+                2. Crea un progetto → Abilita <b>Places API</b> e <b>Maps JavaScript API</b><br>
+                3. Crea una credenziale API Key → incollala qui sotto<br>
+                <span style="color:var(--text3);">Gratuito fino a ~1.000 ricerche/mese. Richiede carta di credito per attivare il piano free.</span>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <input type="text" id="farming-apikey-input" placeholder="AIzaSy..." class="filter-select" style="flex:1;min-width:200px;font-family:monospace;font-size:12px;">
+                <button class="btn btn-primary btn-sm" onclick="saveFarmingApiKey()">💾 Salva chiave</button>
+                <button class="btn btn-danger btn-sm" onclick="clearFarmingApiKey()">🗑 Rimuovi</button>
+              </div>
+              <div id="farming-apikey-msg" style="font-size:12px;margin-top:6px;"></div>
             </div>
           </div>
-          <div id="farming-instructions-area"></div>
+
+          <!-- Search form -->
+          <div class="farming-step-card">
+            <div class="farming-step-header">
+              <span class="farming-step-num">🔍</span>
+              <div>
+                <div style="font-size:15px;font-weight:700;">Cerca attività su Google Maps</div>
+                <div style="font-size:12.5px;color:var(--text2);margin-top:2px;">Inserisci categoria e città per trovare potenziali clienti</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;flex-wrap:wrap;" class="farming-search-grid">
+              <div>
+                <label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:4px;">Categoria / Tipo attività</label>
+                <input type="text" id="farming-query" placeholder="es. idraulici, ristoranti, commercialisti..." class="filter-select" style="width:100%;" onkeydown="if(event.key==='Enter')searchGooglePlaces()">
+              </div>
+              <div>
+                <label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:4px;">Città</label>
+                <input type="text" id="farming-city" placeholder="es. Napoli, Milano, Roma..." class="filter-select" style="width:100%;" onkeydown="if(event.key==='Enter')searchGooglePlaces()">
+              </div>
+              <div style="display:flex;align-items:flex-end;">
+                <button class="btn btn-primary" onclick="searchGooglePlaces()" id="farming-search-btn" style="white-space:nowrap;">🔍 Cerca</button>
+              </div>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;" id="farming-quick-cats">
+              <span style="font-size:11.5px;color:var(--text3);align-self:center;">Cerca rapida:</span>
+              <button class="farming-quick-btn" onclick="setFarmingQuery('ristoranti')">🍽 Ristoranti</button>
+              <button class="farming-quick-btn" onclick="setFarmingQuery('idraulici')">🔧 Idraulici</button>
+              <button class="farming-quick-btn" onclick="setFarmingQuery('commercialisti')">📊 Commercialisti</button>
+              <button class="farming-quick-btn" onclick="setFarmingQuery('avvocati')">⚖️ Avvocati</button>
+              <button class="farming-quick-btn" onclick="setFarmingQuery('officine auto')">🚗 Officine</button>
+              <button class="farming-quick-btn" onclick="setFarmingQuery('negozi abbigliamento')">👗 Abbigliamento</button>
+              <button class="farming-quick-btn" onclick="setFarmingQuery('agenzie immobiliari')">🏠 Immobiliari</button>
+            </div>
+          </div>
+
+          <!-- Results -->
+          <div id="farming-places-results" style="display:none;">
+            <div class="farming-step-card">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                <div>
+                  <span style="font-size:14px;font-weight:700;" id="farming-results-title"></span>
+                  <span style="font-size:12px;color:var(--text3);margin-left:8px;" id="farming-results-sub"></span>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                  <label style="font-size:12px;color:var(--text2);">Assegna a:</label>
+                  <select class="filter-select" id="farming-places-agent" style="font-size:12px;padding:6px 10px;">
+                    <option value="">— Nessuno —</option>
+                  </select>
+                  <button class="btn btn-primary btn-sm" onclick="importSelectedPlaces()" id="farming-import-sel-btn">✅ Importa selezionati (<span id="farming-sel-count">0</span>)</button>
+                  <button class="btn btn-secondary btn-sm" onclick="searchMorePlaces()" id="farming-more-btn" style="display:none;">⬇ Carica altri</button>
+                </div>
+              </div>
+              <!-- Select all bar -->
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:8px 12px;background:var(--surface2);border-radius:var(--radius-sm);">
+                <input type="checkbox" id="farming-select-all" onchange="toggleSelectAllPlaces(this)">
+                <label for="farming-select-all" style="font-size:12.5px;cursor:pointer;">Seleziona tutti i risultati</label>
+                <span id="farming-already-count" style="font-size:11.5px;color:var(--text3);margin-left:auto;"></span>
+              </div>
+              <div id="farming-places-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+            </div>
+          </div>
+
+          <!-- Loading -->
+          <div id="farming-places-loading" style="display:none;">
+            <div class="farming-step-card" style="text-align:center;padding:40px;">
+              <div style="font-size:30px;margin-bottom:10px;">🔍</div>
+              <div style="font-size:14px;font-weight:600;color:var(--text2);">Ricerca in corso su Google Maps...</div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- STEP 3: Import -->
-        <div class="farming-step-card" id="farming-step3" style="display:none;">
-          <div class="farming-step-header">
-            <span class="farming-step-num">3</span>
-            <div>
-              <div style="font-size:15px;font-weight:700;">Importa il file nel CRM</div>
-              <div style="font-size:12.5px;color:var(--text2);margin-top:2px;">Carica il CSV/Excel — la mappatura avviene automaticamente</div>
+        <!-- ══ TAB: CSV IMPORT ═════════════════════════════════ -->
+        <div id="farming-tab-csv" style="display:none;">
+          <!-- Source selector -->
+          <div class="farming-step-card" id="farming-step1">
+            <div class="farming-step-header">
+              <span class="farming-step-num">1</span>
+              <div>
+                <div style="font-size:15px;font-weight:700;">Scegli la fonte del file</div>
+                <div style="font-size:12.5px;color:var(--text2);margin-top:2px;">Seleziona il tool usato per estrarre i dati</div>
+              </div>
+            </div>
+            <div class="farming-source-grid" id="farming-sources">
+              <div class="farming-source-card active" onclick="selectFarmingSource('paginegialle')" id="fsrc-paginegialle">
+                <div class="farming-source-icon">🟡</div>
+                <div class="farming-source-name">Pagine Gialle</div>
+                <div class="farming-source-sub">+ Octoparse</div>
+              </div>
+              <div class="farming-source-card" onclick="selectFarmingSource('linkedin')" id="fsrc-linkedin">
+                <div class="farming-source-icon">💼</div>
+                <div class="farming-source-name">LinkedIn</div>
+                <div class="farming-source-sub">+ Phantombuster</div>
+              </div>
+              <div class="farming-source-card" onclick="selectFarmingSource('amazon')" id="fsrc-amazon">
+                <div class="farming-source-icon">📦</div>
+                <div class="farming-source-name">Amazon Sellers</div>
+                <div class="farming-source-sub">+ Apify</div>
+              </div>
+              <div class="farming-source-card" onclick="selectFarmingSource('custom')" id="fsrc-custom">
+                <div class="farming-source-icon">📄</div>
+                <div class="farming-source-name">File generico</div>
+                <div class="farming-source-sub">Qualsiasi fonte</div>
+              </div>
             </div>
           </div>
-
-          <!-- Column mapping hint -->
-          <div class="farming-info-box" id="farming-column-hint"></div>
-
-          <!-- Upload zone -->
-          <div class="upload-zone" style="padding:28px;margin-bottom:16px;" onclick="document.getElementById('farming-file-input').click()" id="farming-drop-zone">
-            <div style="font-size:30px;margin-bottom:8px;">🌱</div>
-            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Clicca o trascina il file CSV / Excel</div>
-            <div class="upload-sub">Supporta .csv · .xlsx · .xls</div>
+          <!-- Instructions -->
+          <div class="farming-step-card" id="farming-step2" style="display:none;">
+            <div class="farming-step-header">
+              <span class="farming-step-num">2</span>
+              <div>
+                <div style="font-size:15px;font-weight:700;" id="farming-step2-title">Istruzioni</div>
+                <div style="font-size:12.5px;color:var(--text2);margin-top:2px;" id="farming-step2-sub"></div>
+              </div>
+            </div>
+            <div id="farming-instructions-area"></div>
           </div>
-          <input type="file" id="farming-file-input" accept=".csv,.xlsx,.xls" style="display:none" onchange="handleFarmingImport(this)">
-
-          <!-- Preview table -->
-          <div id="farming-preview" style="display:none;">
-            <div style="font-size:13px;font-weight:700;margin-bottom:10px;" id="farming-preview-title"></div>
-            <!-- Column mapping -->
-            <div id="farming-col-mapping" style="margin-bottom:16px;"></div>
-            <!-- Data preview -->
-            <div id="farming-preview-table" style="overflow-x:auto;max-height:280px;overflow-y:auto;border-radius:var(--radius-sm);border:1px solid var(--border);"></div>
-            <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center;">
-              <button class="btn btn-primary" onclick="confirmFarmingImport()">✅ Importa <span id="farming-import-count"></span> Contatti</button>
-              <button class="btn btn-secondary" onclick="resetFarming()">↩ Ricomincia</button>
-              <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
-                <label style="font-size:12.5px;color:var(--text2);">Assegna agente:</label>
-                <select class="filter-select" id="farming-assign-agent" style="font-size:12px;padding:6px 10px;">
-                  <option value="">— Nessuno (assegna dopo) —</option>
-                </select>
+          <!-- Upload -->
+          <div class="farming-step-card" id="farming-step3" style="display:none;">
+            <div class="farming-step-header">
+              <span class="farming-step-num">3</span>
+              <div>
+                <div style="font-size:15px;font-weight:700;">Importa il file</div>
+                <div style="font-size:12.5px;color:var(--text2);margin-top:2px;">CSV o Excel — mappatura automatica</div>
+              </div>
+            </div>
+            <div class="farming-info-box" id="farming-column-hint"></div>
+            <div class="upload-zone" style="padding:28px;margin-bottom:16px;" onclick="document.getElementById('farming-file-input').click()">
+              <div style="font-size:30px;margin-bottom:8px;">🌱</div>
+              <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Clicca o trascina il file CSV / Excel</div>
+              <div class="upload-sub">Supporta .csv · .xlsx · .xls</div>
+            </div>
+            <input type="file" id="farming-file-input" accept=".csv,.xlsx,.xls" style="display:none" onchange="handleFarmingImport(this)">
+            <div id="farming-preview" style="display:none;">
+              <div style="font-size:13px;font-weight:700;margin-bottom:10px;" id="farming-preview-title"></div>
+              <div id="farming-col-mapping" style="margin-bottom:16px;"></div>
+              <div id="farming-preview-table" style="overflow-x:auto;max-height:280px;overflow-y:auto;border-radius:var(--radius-sm);border:1px solid var(--border);"></div>
+              <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center;">
+                <button class="btn btn-primary" onclick="confirmFarmingImport()">✅ Importa <span id="farming-import-count"></span> Contatti</button>
+                <button class="btn btn-secondary" onclick="resetFarming()">↩ Ricomincia</button>
+                <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
+                  <label style="font-size:12.5px;color:var(--text2);">Assegna agente:</label>
+                  <select class="filter-select" id="farming-assign-agent" style="font-size:12px;padding:6px 10px;">
+                    <option value="">— Nessuno —</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- STEP 4: Risultato -->
+        <!-- RESULT (shared) -->
         <div class="farming-step-card" id="farming-step4" style="display:none;">
           <div class="farming-step-header">
             <span class="farming-step-num" style="background:var(--green);">✓</span>
@@ -1001,12 +1152,10 @@ textarea.form-input{resize:vertical;min-height:72px;}
           </div>
         </div>
 
-        <!-- Storico import -->
-        <div class="farming-step-card" style="margin-top:8px;" id="farming-history-card">
+        <!-- History -->
+        <div class="farming-step-card" id="farming-history-card">
           <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text2);">📋 Storico Import Farming</div>
-          <div id="farming-history-list">
-            <div style="font-size:13px;color:var(--text3);">Nessun import ancora effettuato.</div>
-          </div>
+          <div id="farming-history-list"><div style="font-size:13px;color:var(--text3);">Nessun import ancora effettuato.</div></div>
         </div>
       </div>
 
@@ -2376,43 +2525,142 @@ function deleteDoc(cid,type,idx){
 // KANBAN
 // ═══════════════════════════════════════════════════════════
 let dragId = null;
-function renderKanban() {
+let pipelineIndex = 0;
+let pipelineCompactAll = false;
+
+function getFilteredItems(statusKey) {
   const filterAgent = document.getElementById('work-filter-agent')?.value||'';
   const isAgent = currentUser?.ruolo==='Agente';
-  const board = document.getElementById('kanban-board');
-  board.innerHTML = WORK_STATUSES.map(s=>{
-    let items = workItems.filter(w=>w.status===s.key);
-    // filter by agent — handles both contact and client work items
-    if(isAgent) items = items.filter(w=>{
-      if(w.isClient && w.clientId){ const cl=clients.find(x=>x.id===w.clientId); return !cl?.agente || cl.agente===currentUser.id; }
-      const c=contacts.find(x=>x.id===w.contactId); return !c?.agente || c.agente===currentUser.id;
-    });
-    else if(filterAgent) items = items.filter(w=>{
-      if(w.isClient && w.clientId){ const cl=clients.find(x=>x.id===w.clientId); return cl?.agente===filterAgent; }
-      const c=contacts.find(x=>x.id===w.contactId); return c?.agente===filterAgent;
-    });
-    const expanded = colExpanded[s.key]!==false;
-    return `<div class="kanban-col ${s.accent}">
-      <div class="kanban-col-header" onclick="toggleCol('${s.key}')">
-        <span class="kanban-col-title">
-          <span style="width:9px;height:9px;border-radius:50%;background:${s.color};display:inline-block;"></span>
-          ${s.label} <span class="col-count">${items.length}</span>
+  let items = workItems.filter(w=>w.status===statusKey);
+  if(isAgent) items = items.filter(w=>{
+    if(w.isClient && w.clientId){ const cl=clients.find(x=>x.id===w.clientId); return !cl?.agente || cl.agente===currentUser.id; }
+    const c=contacts.find(x=>x.id===w.contactId); return !c?.agente || c.agente===currentUser.id;
+  });
+  else if(filterAgent) items = items.filter(w=>{
+    if(w.isClient && w.clientId){ const cl=clients.find(x=>x.id===w.clientId); return cl?.agente===filterAgent; }
+    const c=contacts.find(x=>x.id===w.contactId); return c?.agente===filterAgent;
+  });
+  return items;
+}
+
+function renderKanban() {
+  // clamp index
+  pipelineIndex = Math.max(0, Math.min(pipelineIndex, WORK_STATUSES.length-1));
+  const s = WORK_STATUSES[pipelineIndex];
+  const items = getFilteredItems(s.key);
+  const expanded = colExpanded[s.key] !== false;
+
+  // Build column
+  const wrap = document.getElementById('pipeline-col-wrap');
+  wrap.innerHTML = `
+    <div class="pipeline-col">
+      <div class="pipeline-col-header">
+        <span class="pipeline-col-title">
+          <span style="width:11px;height:11px;border-radius:50%;background:${s.color};display:inline-block;flex-shrink:0;"></span>
+          ${s.label}
+          <span class="col-count">${items.length}</span>
         </span>
-        <span class="col-toggle ${expanded?'open':''}">▾</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:11px;color:var(--text3);">${pipelineIndex+1} / ${WORK_STATUSES.length}</span>
+          <button class="icon-btn" onclick="togglePipelineCol('${s.key}')" title="${expanded?'Comprimi':'Espandi'}" style="opacity:.7;">${expanded?'▲':'▼'}</button>
+        </div>
       </div>
-      ${expanded?`<div class="kanban-cards" data-status="${s.key}"
+      ${expanded ? `
+      <div class="pipeline-col-body">
+        <div class="kanban-cards" data-status="${s.key}"
           ondragover="dragOver(event)" ondrop="drop(event,this)" ondragleave="dragLeave(event)">
-        ${items.map(w=>renderCard(w,s)).join('')}
-        ${!items.length?'<div class="empty-state"><div class="icon" style="font-size:20px;">—</div><p>Nessun contatto</p></div>':''}
-      </div>`:''}
+          ${items.map(w=>renderCard(w,s)).join('')}
+          ${!items.length?`<div style="padding:28px;text-align:center;color:var(--text3);font-size:13px;">— Nessun contatto in questa fase —</div>`:''}
+        </div>
+      </div>` : ''}
+    </div>`;
+
+  // Arrows
+  document.getElementById('pipe-prev').disabled = pipelineIndex === 0;
+  document.getElementById('pipe-next').disabled = pipelineIndex === WORK_STATUSES.length-1;
+
+  // Dots
+  const dots = document.getElementById('pipeline-dots');
+  dots.innerHTML = WORK_STATUSES.map((st,i)=>{
+    const cnt = getFilteredItems(st.key).length;
+    return `<div class="pipeline-dot${i===pipelineIndex?' active':''}${cnt>0?' has-items':''}"
+      onclick="pipelineGoTo(${i})"
+      title="${st.label} (${cnt})"
+      style="${cnt>0&&i!==pipelineIndex?'background:'+st.color+'44;border-color:'+st.color+';':''}">
     </div>`;
   }).join('');
+
+  // Toggle all button label
+  const btn = document.getElementById('btn-toggle-all-cols');
+  if(btn) btn.textContent = pipelineCompactAll ? '☰ Espandi' : '☰ Vista compatta';
+}
+
+function pipelineNav(dir){
+  pipelineIndex += dir;
+  pipelineIndex = Math.max(0, Math.min(pipelineIndex, WORK_STATUSES.length-1));
+  renderKanban();
+}
+
+function pipelineGoTo(idx){
+  pipelineIndex = idx;
+  renderKanban();
+}
+
+function togglePipelineCol(key){
+  colExpanded[key] = colExpanded[key]===false ? true : false;
+  renderKanban();
+}
+
+function toggleAllCols(){
+  pipelineCompactAll = !pipelineCompactAll;
+  WORK_STATUSES.forEach(s=>{ colExpanded[s.key] = !pipelineCompactAll; });
+  renderKanban();
+}
+
+// Drag between columns via side drop zones
+function pipeDragOver(e,side){
+  e.preventDefault();
+  document.getElementById('pipe-drop-'+side).classList.add('drag-over');
+}
+function pipeDragLeave(e){
+  e.currentTarget.classList.remove('drag-over');
+}
+function pipeDrop(e,side){
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if(!dragId) return;
+  const wi = workItems.find(w=>w.id===dragId);
+  if(!wi) return;
+  const newIdx = pipelineIndex + (side==='right'?1:-1);
+  if(newIdx<0||newIdx>=WORK_STATUSES.length) return;
+  wi.status = WORK_STATUSES[newIdx].key;
+  pipelineIndex = newIdx;
+  save();
+  renderKanban();
+  showNotif(null,'✅','Spostato in: '+WORK_STATUSES[newIdx].label);
+}
+
+// Show/hide drop zones when dragging
+const _origDragStart = typeof dragStart==='function' ? dragStart : null;
+function dragStart(e,wid){
+  dragId=wid; e.target.classList.add('dragging'); e.dataTransfer.effectAllowed='move';
+  // show side drop zones
+  if(pipelineIndex>0) document.getElementById('pipe-drop-left').classList.add('drag-active');
+  if(pipelineIndex<WORK_STATUSES.length-1) document.getElementById('pipe-drop-right').classList.add('drag-active');
+}
+function dragEnd(e){
+  e.target.classList.remove('dragging');
+  document.getElementById('pipe-drop-left').classList.remove('drag-active','drag-over');
+  document.getElementById('pipe-drop-right').classList.remove('drag-active','drag-over');
 }
 
 function toggleCol(key){ colExpanded[key]=colExpanded[key]===false?true:false; renderKanban(); }
 
 function formatDate(d){ if(!d)return null; const p=d.split('-'); return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d; }
 function getDateClass(ds){ if(!ds)return ''; const d=new Date(ds),n=new Date(); const td=new Date(n.getFullYear(),n.getMonth(),n.getDate()),dd=new Date(d.getFullYear(),d.getMonth(),d.getDate()); if(dd<td)return 'overdue'; if(dd.getTime()===td.getTime())return 'today'; return 'upcoming'; }
+
+let cardExpanded = {};
+function toggleCardExpand(wid){ cardExpanded[wid]=!cardExpanded[wid]; renderKanban(); }
 
 function renderCard(w,s){
   // Support both contacts and clients in work
@@ -2447,40 +2695,79 @@ function renderCard(w,s){
   const hasDocs = docId && ((docObj.contratto||[]).length+(docObj.visura||[]).length+(docObj.altri||[]).length+(docObj.fatture||[]).length+(docObj.analisi||[]).length+(docObj.foto||[]).length>0);
   const cl2 = isClientCard ? clients.find(x=>x.id===w.clientId) : null;
   const address = isClientCard ? (cl2?.indirizzo_operativo||cl2?.indirizzo_fiscale||'') : (c ? (c.indirizzo_operativo||c.indirizzo_fiscale||'') : '');
-  return `<div class="kanban-card" draggable="true" data-wid="${w.id}" ondragstart="dragStart(event,'${w.id}')" ondragend="dragEnd(event)">
-    <div class="card-left" style="min-width:0;">
-      <div class="card-name">
-        ${isClientCard?`<span class="card-name-link" style="color:var(--green)" onclick="event.stopPropagation();showClientDetail('${w.clientId}')" title="Apri scheda cliente">🏆 ${name}${hasDocs?' 📎':''}</span>`:(c?`<span class="card-name-link" onclick="event.stopPropagation();showDetail('${c.id}')" title="Apri scheda contatto">${name}${hasDocs?' 📎':''}</span>`:name)}
+  const isExpanded = cardExpanded[w.id] !== false;
+  return `<div class="kanban-card${isExpanded?'':' kanban-card-compact'}" data-wid="${w.id}"
+    onclick="openPhasePopup('${w.id}')">
+    <div class="card-header-row">
+      <div class="card-name" style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+        ${isClientCard
+          ?`<span class="card-name-link" style="color:var(--green)" onclick="event.stopPropagation();showClientDetail('${w.clientId}')">🏆 ${name}${hasDocs?' 📎':''}</span>`
+          :(c?`<span class="card-name-link" onclick="event.stopPropagation();showDetail('${c.id}')">${name}${hasDocs?' 📎':''}</span>`:name)}
       </div>
-      ${address?`<div class="card-address">📍 ${address.substring(0,45)}${address.length>45?'…':''}</div>`:''}
-      ${agentHtml}${phoneHtml}
-      ${w.workNote?`<div class="card-note-visible">📝 ${w.workNote.substring(0,80)}${w.workNote.length>80?'…':''}</div>`:''}
-      ${w.relavMotivo?`<div class="card-note-visible" style="border-left-color:var(--green);background:rgba(39,201,143,.08);color:var(--green);">🔄 Ri-lavorazione: ${w.relavMotivo.substring(0,80)}${w.relavMotivo.length>80?'…':''}</div>`:''}
-      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;">${ctxHtml}${remHtml}</div>
+      <div style="display:flex;align-items:center;gap:3px;flex-shrink:0;margin-left:6px;">
+        ${(w.reminderDate||remHtml)?`<span style="font-size:12px;">🔔</span>`:''}
+        <button class="icon-btn card-expand-btn" onclick="event.stopPropagation();toggleCardExpand('${w.id}')"
+          title="${isExpanded?'Comprimi':'Espandi'}">
+          ${isExpanded?'▲':'▼'}
+        </button>
+      </div>
     </div>
-    <div class="card-right">
-      <div class="card-actions-row">
-        <button class="icon-btn" onclick="event.stopPropagation();openWorkEdit('${w.id}')" title="Modifica lavorazione">✏️</button>
+    ${isExpanded?`
+    <div class="card-expanded-body">
+      ${agentHtml}
+      ${phoneHtml}
+      ${ctxHtml||remHtml?`<div style="display:flex;flex-wrap:wrap;gap:4px;">${ctxHtml}${remHtml}</div>`:''}
+      ${w.workNote?`<div class="card-note-visible">📝 ${w.workNote.substring(0,120)}${w.workNote.length>120?'…':''}</div>`:''}
+      ${w.relavMotivo?`<div class="card-note-visible" style="border-left-color:var(--green);background:rgba(39,201,143,.08);color:var(--green);">🔄 ${w.relavMotivo.substring(0,80)}${w.relavMotivo.length>80?'…':''}</div>`:''}
+      <div class="card-actions-row" style="margin-top:6px;opacity:1;justify-content:flex-start;">
+        <button class="icon-btn" onclick="event.stopPropagation();openWorkEdit('${w.id}')" title="Modifica">✏️</button>
         <button class="icon-btn" onclick="event.stopPropagation();openReminder('${w.id}')" title="Promemoria">🔔</button>
-        ${isClientCard?`<button class="icon-btn" onclick="event.stopPropagation();showClientDetail('${w.clientId}')" title="Apri scheda cliente">👁</button>`:(c?`<button class="icon-btn" onclick="event.stopPropagation();showDetail('${c.id}')" title="Apri scheda">👁</button>`:'')}
-        ${address?`<button class="icon-btn" onclick="event.stopPropagation();window.open('https://maps.google.com/?q='+encodeURIComponent('${address.replace(/'/g,"\'")}'),'_blank')" title="Apri in Maps">🗺</button>`:''}
-        ${(c||isClientCard)?`<button class="icon-btn" onclick="event.stopPropagation();openGCalendar('${w.id}')" title="Aggiungi a Google Calendar">📅</button>`:''}
-        <button class="icon-btn" onclick="event.stopPropagation();removeFromWork('${w.id}')" title="Rimuovi">🗑</button>
+        ${isClientCard?`<button class="icon-btn" onclick="event.stopPropagation();showClientDetail('${w.clientId}')" title="Scheda">👁</button>`:(c?`<button class="icon-btn" onclick="event.stopPropagation();showDetail('${c.id}')" title="Scheda">👁</button>`:'')}
+        ${address?`<button class="icon-btn" onclick="event.stopPropagation();window.open('https://maps.google.com/?q='+encodeURIComponent('${address.replace(/'/g,"\'")}'),'_blank')" title="Maps">🗺</button>`:''}
+        ${(c||isClientCard)?`<button class="icon-btn" onclick="event.stopPropagation();openGCalendar('${w.id}')" title="Calendar">📅</button>`:''}
+        <button class="icon-btn" onclick="event.stopPropagation();removeFromWork('${w.id}')" title="Rimuovi" style="margin-left:auto;">🗑</button>
       </div>
-    </div>
+    </div>`:''}
   </div>`;
 }
 
-function dragStart(e,wid){ dragId=wid; e.target.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; }
-function dragEnd(e){ e.target.classList.remove('dragging'); }
-function dragOver(e){ e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-function dragLeave(e){ e.currentTarget.classList.remove('drag-over'); }
-function drop(e,col){
-  e.preventDefault(); col.classList.remove('drag-over');
-  const wi=workItems.find(w=>w.id===dragId);
-  if(wi){ wi.status=col.dataset.status; save(); }
-  dragId=null; renderKanban();
+function openPhasePopup(wid){
+  const wi = workItems.find(w=>w.id===wid);
+  if(!wi) return;
+  const isClientCard = wi.isClient && wi.clientId;
+  let name = '—';
+  if(isClientCard){ const cl=clients.find(x=>x.id===wi.clientId); name=cl?(cl.ragione||cl.titolare||'—'):(wi.clientName||'—'); }
+  else { const c=contacts.find(x=>x.id===wi.contactId); name=c?(c.ragione||c.titolare||'—'):(wi.tempName||'—'); }
+  document.getElementById('phase-popup-name').textContent = name;
+  document.getElementById('phase-popup-phases').innerHTML = WORK_STATUSES.map(s=>{
+    const isCurrent = wi.status === s.key;
+    return `<button onclick="setPhase('${wid}','${s.key}')" style="
+      display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);
+      border:2px solid ${isCurrent?s.color:'var(--border)'};
+      background:${isCurrent?s.color+'22':'var(--surface2)'};
+      color:${isCurrent?s.color:'var(--text2)'};
+      font-size:13px;font-weight:${isCurrent?700:400};cursor:pointer;font-family:inherit;
+      text-align:left;width:100%;transition:all .1s;">
+      <span style="width:10px;height:10px;border-radius:50%;background:${s.color};flex-shrink:0;display:inline-block;"></span>
+      ${s.label}
+      ${isCurrent?'<span style="margin-left:auto;font-size:11px;opacity:.7;">✓ attuale</span>':''}
+    </button>`;
+  }).join('');
+  document.getElementById('phase-popup-overlay').style.display='flex';
 }
+function closePhasePopup(){ document.getElementById('phase-popup-overlay').style.display='none'; }
+function setPhase(wid,statusKey){
+  const wi=workItems.find(w=>w.id===wid); if(!wi) return;
+  wi.status=statusKey; save();
+  pipelineIndex=WORK_STATUSES.findIndex(s=>s.key===statusKey);
+  closePhasePopup(); renderKanban();
+  showNotif(null,'✅','Spostato in: '+WORK_STATUSES[pipelineIndex].label);
+}
+function dragStart(e,wid){}
+function dragEnd(e){}
+function dragOver(e){ e.preventDefault(); }
+function dragLeave(e){}
+function drop(e,col){}
 function removeFromWork(wid){
   if(!confirm('Rimuovere dalla lavorazione?')) return;
   workItems=workItems.filter(w=>w.id!==wid); save(); renderKanban(); updateStats();
@@ -2596,7 +2883,11 @@ function saveReminder(){ const wid=document.getElementById('reminder-wid').value
 function getAgentStats(userId) {
   const mine = contacts.filter(c => c.agente === userId);
   const total = mine.length;
-  const acq = mine.filter(c => getContactStatus(c) === 'CLIENTE ACQUISITO').length;
+  const acq = mine.filter(c => getContactStatus(c) === 'CLIENTE ACQUISITO').length
+    // also count client workItems (isClient:true) in CLIENTE ACQUISITO assigned to this agent
+    + workItems.filter(w => w.isClient && w.clientId && w.status === 'CLIENTE ACQUISITO' &&
+        (clients.find(cl => cl.id === w.clientId)?.agente === userId ||
+         clients.find(cl => cl.id === w.clientId)?.agenteProvv === userId)).length;
   const ko  = mine.filter(c => getContactStatus(c) === 'CLIENTE KO').length;
   const inLav = mine.filter(c => {
     const s = getContactStatus(c);
@@ -2680,7 +2971,10 @@ function renderStats() {
   // (period filtering would use createdAt if available — we keep all for now)
 
   const total  = ctcs.length;
-  const acq    = ctcs.filter(c => getContactStatus(c) === 'CLIENTE ACQUISITO').length;
+  const acq    = ctcs.filter(c => getContactStatus(c) === 'CLIENTE ACQUISITO').length
+    + workItems.filter(w => w.isClient && w.clientId && w.status === 'CLIENTE ACQUISITO' &&
+        (!agentFilter || clients.find(cl=>cl.id===w.clientId)?.agente===agentFilter ||
+         clients.find(cl=>cl.id===w.clientId)?.agenteProvv===agentFilter)).length;
   const ko     = ctcs.filter(c => getContactStatus(c) === 'CLIENTE KO').length;
   const inLav  = ctcs.filter(c => { const s=getContactStatus(c); return s!=='DORMIENTE'&&s!=='CLIENTE ACQUISITO'&&s!=='CLIENTE KO'; }).length;
   const dorm   = ctcs.filter(c => getContactStatus(c) === 'DORMIENTE').length;
@@ -2762,7 +3056,8 @@ function renderStats() {
 
   const agentBarData = agents.map(u => {
     const mine = ctcs.filter(c => c.agente === u.id);
-    return { name: u.nome, acq: mine.filter(c=>getContactStatus(c)==='CLIENTE ACQUISITO').length, ko: mine.filter(c=>getContactStatus(c)==='CLIENTE KO').length };
+    const acqClient = workItems.filter(w=>w.isClient&&w.clientId&&w.status==='CLIENTE ACQUISITO'&&(clients.find(cl=>cl.id===w.clientId)?.agente===u.id||clients.find(cl=>cl.id===w.clientId)?.agenteProvv===u.id)).length;
+    return { name: u.nome, acq: mine.filter(c=>getContactStatus(c)==='CLIENTE ACQUISITO').length + acqClient, ko: mine.filter(c=>getContactStatus(c)==='CLIENTE KO').length };
   }).filter(d => d.acq > 0 || d.ko > 0);
 
   if (!agentBarData.length) {
@@ -4042,8 +4337,308 @@ function openGCalendar(wid){
 }
 
 
+
 // ═══════════════════════════════════════════════════════════
-// FARMING
+// FARMING — GOOGLE PLACES
+// ═══════════════════════════════════════════════════════════
+let farmingApiKey = localStorage.getItem('crm_places_apikey')||'';
+let placesNextPageToken = null;
+let placesResults = [];
+let selectedPlaceIds = new Set();
+let farmingTab = 'places';
+
+function switchFarmingTab(tab){
+  farmingTab = tab;
+  document.querySelectorAll('.farming-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('ftab-'+tab).classList.add('active');
+  document.getElementById('farming-tab-places').style.display = tab==='places'?'':'none';
+  document.getElementById('farming-tab-csv').style.display   = tab==='csv'?'':'none';
+  document.getElementById('farming-step4').style.display = 'none';
+}
+
+function renderFarming(){
+  renderFarmingHistory();
+  populateFarmingAgents();
+  updateApikeyStatus();
+  // restore tab
+  document.getElementById('farming-tab-places').style.display = '';
+  document.getElementById('farming-tab-csv').style.display = 'none';
+}
+
+function updateApikeyStatus(){
+  const num = document.getElementById('farming-apikey-num');
+  const toggle = document.getElementById('farming-apikey-toggle');
+  if(!num) return;
+  if(farmingApiKey){
+    num.textContent = '✅';
+    num.style.background = 'var(--green)';
+    if(toggle) toggle.textContent = '✏️ Modifica';
+  } else {
+    num.textContent = '🔑';
+    num.style.background = 'var(--accent)';
+    if(toggle) toggle.textContent = '⚙️ Configura';
+  }
+}
+
+function toggleApikeyPanel(){
+  const p = document.getElementById('farming-apikey-panel');
+  p.style.display = p.style.display==='none'?'':'none';
+  if(p.style.display!=='none' && farmingApiKey){
+    document.getElementById('farming-apikey-input').value = farmingApiKey;
+  }
+}
+
+function saveFarmingApiKey(){
+  const v = document.getElementById('farming-apikey-input').value.trim();
+  if(!v){ showMsg('farming-apikey-msg','Inserisci una chiave valida','error'); return; }
+  farmingApiKey = v;
+  localStorage.setItem('crm_places_apikey', v);
+  showMsg('farming-apikey-msg','✅ Chiave salvata!','success');
+  updateApikeyStatus();
+  setTimeout(()=>document.getElementById('farming-apikey-panel').style.display='none',1200);
+}
+
+function clearFarmingApiKey(){
+  farmingApiKey='';
+  localStorage.removeItem('crm_places_apikey');
+  document.getElementById('farming-apikey-input').value='';
+  showMsg('farming-apikey-msg','Chiave rimossa.','');
+  updateApikeyStatus();
+}
+
+function showMsg(id,msg,type){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.textContent=msg;
+  el.style.color = type==='error'?'var(--red)':type==='success'?'var(--green)':'var(--text3)';
+}
+
+function setFarmingQuery(q){
+  document.getElementById('farming-query').value=q;
+  document.getElementById('farming-city').focus();
+}
+
+async function searchGooglePlaces(pageToken){
+  if(!farmingApiKey){
+    toggleApikeyPanel();
+    showNotif(null,'⚠️','Inserisci prima la tua Google Places API Key');
+    return;
+  }
+  const query = document.getElementById('farming-query').value.trim();
+  const city  = document.getElementById('farming-city').value.trim();
+  if(!query){ showNotif(null,'⚠️','Inserisci una categoria di ricerca'); return; }
+
+  document.getElementById('farming-places-loading').style.display='';
+  document.getElementById('farming-places-results').style.display='none';
+
+  if(!pageToken){ placesResults=[]; selectedPlaceIds=new Set(); }
+
+  // Use Places Text Search via proxy-free approach (requires API key with no referrer restriction)
+  const searchText = query + (city?' in '+city:'');
+  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(searchText)}&language=it&region=it&key=${farmingApiKey}${pageToken?'&pagetoken='+pageToken:''}`;
+
+  try {
+    const resp = await fetch(url);
+    const data = await resp.json();
+
+    document.getElementById('farming-places-loading').style.display='none';
+
+    if(data.status==='REQUEST_DENIED'||data.status==='INVALID_REQUEST'){
+      showNotif(null,'❌','API Error: '+data.error_message);
+      return;
+    }
+    if(data.status==='ZERO_RESULTS'){
+      showNotif(null,'ℹ️','Nessun risultato trovato. Prova con termini diversi.');
+      return;
+    }
+
+    placesNextPageToken = data.next_page_token||null;
+    const newResults = data.results||[];
+    placesResults = pageToken ? [...placesResults,...newResults] : newResults;
+
+    // For each result, fetch details (phone, website) in batch
+    await enrichPlacesDetails(newResults);
+
+    renderPlacesResults(query, city);
+  } catch(err){
+    document.getElementById('farming-places-loading').style.display='none';
+    showNotif(null,'❌','Errore di rete. Controlla che la API key abbia i permessi corretti (Places API abilitata, nessuna restrizione referrer).');
+    console.error(err);
+  }
+}
+
+async function enrichPlacesDetails(places){
+  // Fetch phone + website for up to 10 places (to stay within free tier)
+  const toFetch = places.slice(0,10);
+  await Promise.all(toFetch.map(async place=>{
+    if(place._enriched) return;
+    try {
+      const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place.place_id}&fields=formatted_phone_number,website,opening_hours&language=it&key=${farmingApiKey}`;
+      const r = await fetch(url);
+      const d = await r.json();
+      if(d.result){
+        place.phone = d.result.formatted_phone_number||'';
+        place.website = d.result.website||'';
+      }
+    } catch(e){}
+    place._enriched = true;
+  }));
+}
+
+function renderPlacesResults(query, city){
+  const total = placesResults.length;
+  const alreadyImported = placesResults.filter(p=>isAlreadyImported(p)).length;
+
+  document.getElementById('farming-results-title').textContent = total+' attività trovate';
+  document.getElementById('farming-results-sub').textContent = (query||'')+(city?' · '+city:'');
+  document.getElementById('farming-already-count').textContent = alreadyImported>0?alreadyImported+' già presenti nel CRM':'';
+
+  const moreBtn = document.getElementById('farming-more-btn');
+  moreBtn.style.display = placesNextPageToken?'':'none';
+
+  populateFarmingAgents();
+
+  const list = document.getElementById('farming-places-list');
+  list.innerHTML = placesResults.map(p=>{
+    const already = isAlreadyImported(p);
+    const sel = selectedPlaceIds.has(p.place_id);
+    const rating = p.rating?'⭐ '+p.rating+(p.user_ratings_total?' ('+p.user_ratings_total+')':''):'';
+    const addr = p.formatted_address||'';
+    const phone = p.phone||'';
+    const website = p.website||'';
+    const types = (p.types||[]).slice(0,2).map(t=>t.replace(/_/g,' ')).join(' · ');
+    return `<div class="farming-place-card${already?' already-imported':''}${sel?' selected':''}"
+      onclick="togglePlaceSelect('${p.place_id}',${already})"
+      id="fpc-${p.place_id}">
+      <input type="checkbox" ${sel?'checked':''} ${already?'disabled':''} onclick="event.stopPropagation();togglePlaceSelect('${p.place_id}',${already})" style="margin-top:2px;flex-shrink:0;">
+      <div class="farming-place-info">
+        <div class="farming-place-name">${p.name}${already?' <span style="font-size:10px;color:var(--text3);">(già importato)</span>':''}</div>
+        <div class="farming-place-meta">
+          ${addr?'<span>📍 '+addr.substring(0,60)+'</span>':''}
+          ${phone?'<span class="farming-place-badge">📞 '+phone+'</span>':''}
+          ${website?'<span class="farming-place-badge">🌐 '+website.replace(/^https?:\/\//,'').substring(0,30)+'</span>':''}
+          ${rating?'<span class="farming-place-badge">'+rating+'</span>':''}
+          ${types?'<span style="color:var(--text3);">'+types+'</span>':''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  updateSelCount();
+  document.getElementById('farming-places-results').style.display='';
+}
+
+function isAlreadyImported(place){
+  const name = (place.name||'').toLowerCase().trim();
+  const phone = (place.phone||'').replace(/ /g,'');
+  return contacts.some(c=>{
+    const cn=(c.ragione||'').toLowerCase().trim();
+    const cp=(c.cellulare||c.telefono||'').replace(/ /g,'');
+    return (name&&cn===name)||(phone&&cp&&cp===phone);
+  });
+}
+
+function togglePlaceSelect(placeId, already){
+  if(already) return;
+  if(selectedPlaceIds.has(placeId)){
+    selectedPlaceIds.delete(placeId);
+    document.getElementById('fpc-'+placeId)?.classList.remove('selected');
+    const cb = document.querySelector('#fpc-'+placeId+' input[type=checkbox]');
+    if(cb) cb.checked=false;
+  } else {
+    selectedPlaceIds.add(placeId);
+    document.getElementById('fpc-'+placeId)?.classList.add('selected');
+    const cb = document.querySelector('#fpc-'+placeId+' input[type=checkbox]');
+    if(cb) cb.checked=true;
+  }
+  updateSelCount();
+}
+
+function toggleSelectAllPlaces(cb){
+  placesResults.forEach(p=>{
+    if(!isAlreadyImported(p)){
+      if(cb.checked) selectedPlaceIds.add(p.place_id);
+      else selectedPlaceIds.delete(p.place_id);
+    }
+  });
+  renderPlacesResults(
+    document.getElementById('farming-query').value,
+    document.getElementById('farming-city').value
+  );
+  if(cb.checked) document.getElementById('farming-select-all').checked=true;
+}
+
+function updateSelCount(){
+  document.getElementById('farming-sel-count').textContent = selectedPlaceIds.size;
+}
+
+async function searchMorePlaces(){
+  if(!placesNextPageToken) return;
+  // Google requires a short delay before using next_page_token
+  document.getElementById('farming-more-btn').textContent='⏳ Caricamento...';
+  await new Promise(r=>setTimeout(r,2000));
+  await searchGooglePlaces(placesNextPageToken);
+}
+
+function importSelectedPlaces(){
+  if(!selectedPlaceIds.size){ showNotif(null,'⚠️','Seleziona almeno un risultato'); return; }
+  const agentId = document.getElementById('farming-places-agent').value;
+  let imported=0, dupes=0;
+  selectedPlaceIds.forEach(pid=>{
+    const p = placesResults.find(x=>x.place_id===pid);
+    if(!p) return;
+    if(isAlreadyImported(p)){ dupes++; return; }
+    // Parse city from formatted_address
+    const addrParts = (p.formatted_address||'').split(',');
+    const city = addrParts.length>1?addrParts[addrParts.length-2].trim():'';
+    const addr = addrParts.length>1?addrParts.slice(0,-1).join(',').trim():'';
+    contacts.push({
+      id: genId(),
+      ragione: p.name||'',
+      telefono: p.phone||'',
+      cellulare: '',
+      indirizzo_operativo: addr,
+      citta: city,
+      email1: '',
+      sito_web: p.website||'',
+      categoria: (p.types||[]).slice(0,2).map(t=>t.replace(/_/g,' ')).join(', '),
+      agente: agentId||'',
+      fonte: 'Google Maps',
+      fonte_icon: '🗺',
+      rating_google: p.rating||'',
+      place_id: p.place_id,
+      data_import: new Date().toISOString().split('T')[0],
+    });
+    imported++;
+  });
+  save();
+  const histItem={id:genId(),date:new Date().toLocaleString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),source:'Google Maps',icon:'🗺',imported,skipped:0,dupes,agent:agentId?getUserName(agentId):'—'};
+  farmingHistory.unshift(histItem);
+  if(farmingHistory.length>20) farmingHistory=farmingHistory.slice(0,20);
+  localStorage.setItem('crm_farming_history',JSON.stringify(farmingHistory));
+  selectedPlaceIds.clear();
+  document.getElementById('farming-step4').style.display='';
+  document.getElementById('farming-result-sub').textContent='🗺 Google Maps · '+histItem.date;
+  document.getElementById('farming-result-stats').innerHTML=
+    '<div class="calcoli-kpi" style="flex:1;min-width:120px;"><div class="calcoli-kpi-val" style="color:var(--green)">'+imported+'</div><div class="calcoli-kpi-label">Importati</div></div>'+
+    '<div class="calcoli-kpi" style="flex:1;min-width:120px;"><div class="calcoli-kpi-val" style="color:var(--yellow)">'+dupes+'</div><div class="calcoli-kpi-label">Già presenti</div></div>';
+  renderFarmingHistory();
+  updateStats();
+  showNotif(null,'✅',imported+' contatti importati da Google Maps!');
+}
+
+function populateFarmingAgents(){
+  ['farming-assign-agent','farming-places-agent'].forEach(id=>{
+    const sel=document.getElementById(id); if(!sel) return;
+    while(sel.options.length>1) sel.remove(1);
+    users.filter(u=>u.ruolo==='Agente'||u.ruolo==='Responsabile').forEach(u=>{
+      const o=document.createElement('option'); o.value=u.id; o.textContent=u.nome+' '+u.cognome; sel.appendChild(o);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// FARMING — CSV IMPORT
 // ═══════════════════════════════════════════════════════════
 let farmingSource = 'paginegialle';
 let farmingRawData = [];
@@ -4153,14 +4748,7 @@ function renderFarming(){
   populateFarmingAgents();
 }
 
-function populateFarmingAgents(){
-  const sel = document.getElementById('farming-assign-agent');
-  if(!sel) return;
-  while(sel.options.length>1) sel.remove(1);
-  users.filter(u=>u.ruolo==='Agente'||u.ruolo==='Responsabile').forEach(u=>{
-    const o=document.createElement('option'); o.value=u.id; o.textContent=u.nome+' '+u.cognome; sel.appendChild(o);
-  });
-}
+
 
 function selectFarmingSource(src){
   farmingSource = src;
